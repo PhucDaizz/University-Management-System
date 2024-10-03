@@ -9,7 +9,7 @@ public class Splash extends JFrame implements Runnable {
 
     Splash(){
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/first.png"));
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/first.jpg"));
         Image i2 = i1.getImage().getScaledInstance(1000,700, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel img = new JLabel(i3);

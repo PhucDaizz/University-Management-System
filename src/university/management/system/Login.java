@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -42,14 +43,14 @@ public class Login extends JFrame implements ActionListener {
         back.addActionListener(this);
         add(back);
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/second.png"));
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/second.jpg"));
         Image i2 =  i1.getImage().getScaledInstance(200,200,Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel img = new JLabel(i3);
         img.setBounds(350,20,200,200);
         add(img);
 
-        ImageIcon i11 = new ImageIcon(ClassLoader.getSystemResource("icon/loginback.png"));
+        ImageIcon i11 = new ImageIcon(ClassLoader.getSystemResource("icon/loginback.jpg"));
         Image i22 =  i11.getImage().getScaledInstance(600,300,Image.SCALE_DEFAULT);
         ImageIcon i33 = new ImageIcon(i22);
         JLabel image = new JLabel(i33);
@@ -66,7 +67,25 @@ public class Login extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
+            String userName  = textFieldName.getText();
+            String password = new String(passwordField.getPassword());
 
+            String query = "select * from login where username = '"+userName+"' and password = '"+password+"'";
+            try{
+                Conn c= new Conn();
+                ResultSet resultSet = c.statement.executeQuery(query);
+
+                if(resultSet.next()){
+                    setVisible(false);
+                    new main_class();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid Username or Password");
+                }
+
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
         } else {
             setVisible(false);
         }
