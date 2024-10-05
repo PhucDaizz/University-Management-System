@@ -4,5 +4,6 @@
 	<contentEntry url="file://$MODULE_DIR$"/>
 	<levels>
 		<level name="mysql-connector-java-8.0.28" value="project"/>
+		<level name="jcalendar-tz-1.3.3-4" value="project"/>
 	</levels>
 </component>
