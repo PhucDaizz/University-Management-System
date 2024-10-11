@@ -110,12 +110,5 @@ public class TeacherDetails extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		new TeacherDetails();
 			
-	}
-		
-		
-		
-		
-		
-		
-		
+	}	
 }
