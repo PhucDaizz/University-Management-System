@@ -43,7 +43,7 @@ public class StudentLeave extends JFrame implements ActionListener {
 			Conn c = new Conn();
 			ResultSet resultSet = c.statement.executeQuery("select * from student");
 			while (resultSet.next()) {
-				choiceRollNo.add(resultSet.getString("rollno"));
+				choiceRollNo.add(resultSet.getString("stuID"));
 			}
 			
 		}catch (Exception e) {

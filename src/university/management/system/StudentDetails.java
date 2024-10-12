@@ -33,7 +33,7 @@ public class StudentDetails extends JFrame implements ActionListener {
 			Conn c = new Conn();
 			ResultSet resultSet = c.statement.executeQuery("select * from student");
 			while(resultSet.next()) {
-				choice.add(resultSet.getString("rollno"));
+				choice.add(resultSet.getString("stuID"));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
