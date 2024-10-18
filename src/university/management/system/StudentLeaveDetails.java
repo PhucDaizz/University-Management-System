@@ -19,7 +19,7 @@ public class StudentLeaveDetails extends JFrame implements ActionListener {
 	StudentLeaveDetails(){
 getContentPane().setBackground(new Color(250, 170, 206));
         
-        JLabel heading = new JLabel("Tìm kiếm băngf ID học sinh");
+        JLabel heading = new JLabel("Tìm kiếm bằng ID học sinh");
         heading.setBounds(20, 20, 150, 20);
         add(heading);
         
