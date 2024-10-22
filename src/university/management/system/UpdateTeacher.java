@@ -182,7 +182,7 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         	}
         }catch(Exception E) {
         	E.printStackTrace();
-        }
+        }   // de t thu copy doan tren
        
         cEMPID.addItemListener(new ItemListener() {
             @Override
