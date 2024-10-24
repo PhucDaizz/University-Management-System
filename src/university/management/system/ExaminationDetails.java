@@ -77,11 +77,12 @@ public class ExaminationDetails extends JFrame implements ActionListener {
         setLayout(null);
         setVisible(true);
     }
-
+    @Override
     public void actionPerformed(ActionEvent e) {
         // Xử lý sự kiện cho nút Result và Back ở đây
         if (e.getSource() == result) {
         	setVisible(false);
+        	new Marks(search.getText());
             // Thực hiện hành động khi nhấn nút Result
         } else
             // Thực hiện hành động khi nhấn nút Back

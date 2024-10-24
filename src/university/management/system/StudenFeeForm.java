@@ -18,25 +18,24 @@ public class StudenFeeForm extends JFrame implements ActionListener {
     // Constructor
     public StudenFeeForm() {
         getContentPane().setBackground(new Color(210, 252, 251));
-
         // Add image
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/fee.jpg"));
         Image i2 = i1.getImage().getScaledInstance(500, 300, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
-        JLabel img = new JLabel(i3);
+        JLabel img = new JLabel((Icon) null);
         img.setBounds(400, 50, 500, 30);
-        add(img);
+        getContentPane().add(img);
 
         // Roll number label
         JLabel stuID = new JLabel("Mã Số:");
         stuID.setBounds(40, 60, 150, 20);
         stuID.setFont(new Font("Tahoma", Font.BOLD, 16));
-        add(stuID);
+        getContentPane().add(stuID);
 
         // Roll number choice
         rollNumber = new Choice();
         rollNumber.setBounds(200, 60, 150, 20);
-        add(rollNumber);
+        getContentPane().add(rollNumber);
 
         // Populate choice with roll numbers from database
         try {
@@ -54,79 +53,79 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         JLabel name = new JLabel("Tên:");
         name.setBounds(40, 100, 150, 20);
 //        name.setFont(new Font("serif", Font.BOLD, 20));
-        add(name);
+        getContentPane().add(name);
 
         JLabel textName = new JLabel(); // Khởi tạo textName
         textName.setBounds(200, 100, 150, 20);
-        add(textName);
+        getContentPane().add(textName);
 
         JLabel fname = new JLabel("Tên Cha:");
         fname.setBounds(40, 140, 150, 20);
 //        fname.setFont(new Font("serif", Font.BOLD, 20));
-        add(fname);
+        getContentPane().add(fname);
 
         JLabel textFName = new JLabel(); // Khởi tạo textFName
         textFName.setBounds(200, 140, 150, 20);
-        add(textFName);
+        getContentPane().add(textFName);
 
         
         // Qualification
         JLabel qualification = new JLabel("Khóa học");
         qualification.setBounds(40,180,150,20);
 //        qualification.setFont(new Font("Tahoma",Font.BOLD,20));
-        add(qualification);
+        getContentPane().add(qualification);
 
         String course[] = {"Lịch Sử Đảng", "Đại số", "Thể chất", "Tin học cơ bản", "Mạng", "Cơ sở sữ liệu", "Triết","Lập Trình Mạng"};
         courseBox = new JComboBox(course);
         courseBox.setBounds(200,180,200,30);
         courseBox.setBackground(Color.WHITE);
-        add(courseBox);
+        getContentPane().add(courseBox);
 
         // Department
         JLabel department = new JLabel("Nhánh");
         department.setBounds(40,220,150,20);
 //        department.setFont(new Font("serif",Font.BOLD,16));
-        add(department);
+        getContentPane().add(department);
 
         String Department[] = {"Khoa học máy tính", "Cơ khí", "Oto", "Điện", "Trí tuệ nhân tạo"};
         departmentBox = new JComboBox(Department);
         departmentBox.setBounds(200,220,150,20);
         departmentBox.setBackground(Color.WHITE);
-        add(departmentBox);
+        getContentPane().add(departmentBox);
         
       
         JLabel textsemester = new JLabel( "Học kì ");
         textsemester.setBounds( 40, 260, 150,  20);
-        add(textsemester);
+        getContentPane().add(textsemester);
 
         String semester[] = {"Học kì 1", "Học kì 2", "Học kì 3", "Học kì 4", "Học kì 5", "Học kì 6", "Học kì 7", "Học kì 8"};
         semesterBox = new JComboBox(semester);
         semesterBox.setBounds(200, 260, 150, 20);
-        add(semesterBox);
+        getContentPane().add(semesterBox);
         
         
         JLabel total = new JLabel( "Số tiền phải trả");
         total.setBounds( 40, 330,  150, 20);
-        add(total);
+        getContentPane().add(total);
 
         totalAmount = new JLabel();
         totalAmount.setBounds( 200, 330,  150, 20);
-        add(totalAmount);
+        getContentPane().add(totalAmount);
 
         update = new JButton( "Cập nhật");
         update.setBounds( 30, 380,  100,  25);
         update.addActionListener(this);
-        add(update);
+        getContentPane().add(update);
         
         pay = new JButton( "Chi trả");
         pay.setBounds( 150, 380,  100,  25);
         pay.addActionListener(this);
-        add(pay);
+        getContentPane().add(pay);
         
         back = new JButton( "Trở về");
         back.setBounds( 270, 380,  100,  25);
         back.addActionListener(this);
-        add(back);
+        getContentPane().add(back);
 
         
         try {
@@ -171,7 +170,7 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         // Set up JFrame
         setSize(900, 500);
         setLocation(350, 10);
-        setLayout(null);
+        getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
