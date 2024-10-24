@@ -11,8 +11,9 @@ import java.sql.SQLException;
 
 public class StudenFeeForm extends JFrame implements ActionListener {
     Choice rollNumber;
-    JLabel textName, textFName; // Định nghĩa các JLabel ở cấp lớp
+    JLabel textName, textFName, totalAmount; // Định nghĩa các JLabel ở cấp lớp
     JComboBox courseBox, departmentBox, semesterBox; 
+    JButton pay, update, back;
 
     // Constructor
     public StudenFeeForm() {
@@ -70,12 +71,12 @@ public class StudenFeeForm extends JFrame implements ActionListener {
 
         
         // Qualification
-        JLabel qualification = new JLabel("Tiến trình");
+        JLabel qualification = new JLabel("Khóa học");
         qualification.setBounds(40,180,150,20);
 //        qualification.setFont(new Font("Tahoma",Font.BOLD,20));
         add(qualification);
 
-        String course[] = {"Đại số", "Thể chất", "Tin học cơ bản", "Mạng", "Cơ sở sữ liệu", "Triết"};
+        String course[] = {"Lịch Sử Đảng", "Đại số", "Thể chất", "Tin học cơ bản", "Mạng", "Cơ sở sữ liệu", "Triết","Lập Trình Mạng"};
         courseBox = new JComboBox(course);
         courseBox.setBounds(200,180,200,30);
         courseBox.setBackground(Color.WHITE);
@@ -103,6 +104,30 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         semesterBox.setBounds(200, 260, 150, 20);
         add(semesterBox);
         
+        
+        JLabel total = new JLabel( "Số tiền phải trả");
+        total.setBounds( 40, 330,  150, 20);
+        add(total);
+
+        totalAmount = new JLabel();
+        totalAmount.setBounds( 200, 330,  150, 20);
+        add(totalAmount);
+
+        update = new JButton( "Cập nhật");
+        update.setBounds( 30, 380,  100,  25);
+        update.addActionListener(this);
+        add(update);
+        
+        pay = new JButton( "Chi trả");
+        pay.setBounds( 150, 380,  100,  25);
+        pay.addActionListener(this);
+        add(pay);
+        
+        back = new JButton( "Trở về");
+        back.setBounds( 270, 380,  100,  25);
+        back.addActionListener(this);
+        add(back);
+
         
         try {
             Conn c = new Conn();
@@ -188,7 +213,57 @@ public class StudenFeeForm extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Handle action events here if needed
+        if (e.getSource() == update) {
+            String course = (String) courseBox.getSelectedItem();
+            String semester = (String) semesterBox.getSelectedItem();
+
+            // Xác định cột học kỳ dựa trên học kỳ đã chọn
+            String semesterColumn = "";
+            switch (semester) {
+                case "Học kì 1": semesterColumn = "semester1"; break;
+                case "Học kì 2": semesterColumn = "semester2"; break;
+                case "Học kì 3": semesterColumn = "semester3"; break;
+                case "Học kì 4": semesterColumn = "semester4"; break;
+                case "Học kì 5": semesterColumn = "semester5"; break;
+                case "Học kì 6": semesterColumn = "semester6"; break;
+                case "Học kì 7": semesterColumn = "semester7"; break;
+                case "Học kì 8": semesterColumn = "semester8"; break;
+            }
+            try {
+                Conn c = new Conn();
+                String query = "SELECT " + semesterColumn + " FROM fee WHERE course='" + course + "'";
+                ResultSet rs = c.statement.executeQuery(query);
+
+                if (rs.next()) {
+                    totalAmount.setText(rs.getString(semesterColumn));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }else if( e.getSource() == pay){
+        	String stuID = rollNumber.getSelectedItem();
+        	String course = (String)courseBox.getSelectedItem();
+        	String semester = (String)semesterBox.getSelectedItem();
+        	String Department = (String)departmentBox.getSelectedItem();
+        	String total = totalAmount.getText();
+        	try {
+        		Conn c = new Conn();
+
+        		// Tạo câu lệnh chèn dữ liệu
+        		String Q = "INSERT INTO feecollege VALUES('" + stuID + "','" + course + "','" + Department + "','" + semester + "','" + total + "')";
+
+        		// Thực thi câu lệnh
+        		c.statement.executeUpdate(Q);
+
+        		// Hiển thị thông báo thành công
+        		JOptionPane.showMessageDialog(null, "Fee Submitted successfully");
+        	}catch (Exception ex) {
+        		ex.printStackTrace();
+        	}
+        	
+        }else {
+        	setVisible(false);
+        }
     }
 
     public static void main(String[] args) {
