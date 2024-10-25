@@ -79,14 +79,14 @@ public class Marks extends JFrame implements ActionListener {
 
             ResultSet rs2 = c.statement.executeQuery("select * from marks where stuID = '" + stuID + "'");
             while (rs2.next()) {
-            	 System.out.println("mrk1: " + rs2.getString("mrk1")); // In ra kết quả của mark
+            	
                 sub1.setText(sub1.getText() + "------------" + rs2.getString("mrk1"));
                 sub2.setText(sub2.getText() + "------------" + rs2.getString("mrk2"));
                 sub3.setText(sub3.getText() + "------------" + rs2.getString("mrk3"));
                 sub4.setText(sub4.getText() + "------------" + rs2.getString("mrk4"));
                 sub5.setText(sub5.getText() + "------------" + rs2.getString("mrk5"));
                 lblsemester.setText("Semester " + rs2.getString("semester"));
-            }
+            } 
         } catch (Exception e) {
             e.printStackTrace();
         }
