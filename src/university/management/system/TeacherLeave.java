@@ -18,18 +18,18 @@ public class TeacherLeave extends JFrame implements ActionListener {
         getContentPane().setBackground(new Color(210, 232, 252));
 
         JLabel heading = new JLabel("Xin nghỉ phép (Giáo viên)");
-        heading.setBounds(40, 50, 300, 30);
+        heading.setBounds(60, 59, 300, 30);
         heading.setFont(new Font("Tahoma", Font.BOLD, 20));
-        add(heading);
+        getContentPane().add(heading);
 
         JLabel RollNoSE = new JLabel("Tìm kiếm theo ID giáo viên");
         RollNoSE.setBounds(60, 100, 200, 20);
         RollNoSE.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        add(RollNoSE);
+        getContentPane().add(RollNoSE);
 
         choiceRollNo = new Choice();
         choiceRollNo.setBounds(60, 130, 200, 20);
-        add(choiceRollNo);
+        getContentPane().add(choiceRollNo);
 
         try {
             Conn c = new Conn();
@@ -44,40 +44,40 @@ public class TeacherLeave extends JFrame implements ActionListener {
         JLabel lbldate = new JLabel("Ngày");
         lbldate.setBounds(60, 180, 200, 20);
         lbldate.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        add(lbldate);
+        getContentPane().add(lbldate);
 
         selDate = new JDateChooser();
         selDate.setBounds(60, 210, 200, 25);
-        add(selDate);
+        getContentPane().add(selDate);
 
         JLabel time = new JLabel("Khoảng thời gian");
         time.setBounds(60, 260, 200, 20);
         time.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        add(time);
+        getContentPane().add(time);
 
         choTime = new Choice();
         choTime.setBounds(60, 290, 200, 20);
         choTime.add("Cả ngày");
         choTime.add("Nửa ngày");
-        add(choTime);
+        getContentPane().add(choTime);
 
         submit = new JButton("Nộp");
         submit.setBounds(60, 350, 100, 25);
         submit.setBackground(Color.black);
         submit.setForeground(Color.white);
         submit.addActionListener(this);
-        add(submit);
+        getContentPane().add(submit);
 
         cancel = new JButton("Hủy bỏ");
         cancel.setBounds(200, 350, 100, 25);
         cancel.setBackground(Color.black);
         cancel.setForeground(Color.white);
         cancel.addActionListener(this);
-        add(cancel);
+        getContentPane().add(cancel);
 
         setSize(500, 550);
         setLocation(550, 100);
-        setLayout(null);
+        getContentPane().setLayout(null);
         setVisible(true);
     }
 

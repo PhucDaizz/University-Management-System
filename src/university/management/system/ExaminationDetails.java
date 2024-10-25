@@ -27,34 +27,36 @@ public class ExaminationDetails extends JFrame implements ActionListener {
         
         getContentPane().setBackground(new Color(241, 252, 218));
         
-        JLabel heading = new JLabel("Check Result");
-        heading.setBounds(350, 15, 400, 50);
-        heading.setFont(new Font("Tahoma", Font.BOLD, 24));
-        add(heading);
+        JLabel heading = new JLabel("Xem kết quả");
+        heading.setBounds(390, 11, 170, 50);
+        heading.setFont(new Font("Tahoma", Font.BOLD, 26));
+        getContentPane().add(heading);
         
         search = new JTextField();
         search.setBounds(80, 90, 200, 30);
-        search.setFont(new Font("Tahoma", Font.PLAIN, 18)); // Sửa lại đây
-        add(search);
+        search.setFont(new Font("Dialog", Font.PLAIN, 16)); // Sửa lại đây
+        getContentPane().add(search);
         
-        result = new JButton("Result");
+        result = new JButton("Tìm");
+        result.setFont(new Font("Dialog", Font.BOLD, 16));
         result.setBounds(300, 90, 120, 30);
         result.setBackground(Color.black);
         result.setForeground(Color.white);
         result.addActionListener(this);
-        add(result);
+        getContentPane().add(result);
         
-        back = new JButton("Back");
+        back = new JButton("Thoát");
+        back.setFont(new Font("Dialog", Font.BOLD, 16));
         back.setBounds(440, 90, 120, 30);
         back.setBackground(Color.black);
         back.setForeground(Color.white);
         back.addActionListener(this);
-        add(back);
+        getContentPane().add(back);
         
         table = new JTable();
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(0, 130, 1000, 310);
-        add(scrollPane);
+        getContentPane().add(scrollPane);
         
         try {
             Conn c = new Conn();
@@ -74,7 +76,7 @@ public class ExaminationDetails extends JFrame implements ActionListener {
         
         setSize(1000, 475);
         setLocation(300, 100);
-        setLayout(null);
+        getContentPane().setLayout(null);
         setVisible(true);
     }
     @Override

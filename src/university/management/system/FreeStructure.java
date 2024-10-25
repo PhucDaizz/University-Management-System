@@ -10,19 +10,20 @@ import net.proteanit.sql.DbUtils; // Import DbUtils để xử lý ResultSet th�
 public class FreeStructure extends JFrame implements ActionListener {
     // Constructor
     FreeStructure() {
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(new Color(153, 255, 204));
 
-        JLabel heading = new JLabel("Fee Structure");
-        heading.setBounds(430, 13, 400, 30);
+        JLabel heading = new JLabel("Chi phí môn học");
+        heading.setBounds(340, 22, 258, 30);
         heading.setFont(new Font("Tahoma", Font.BOLD, 30));
-        add(heading);
+        getContentPane().add(heading);
 
         JTable table = new JTable();
+        table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
         // Thêm bảng vào JScrollPane để có thể cuộn
         JScrollPane sp = new JScrollPane(table);
-        sp.setBounds(50, 100, 800, 500); // Thiết lập vị trí và kích thước cho bảng
-        add(sp);
+        sp.setBounds(52, 73, 886, 550); // Thiết lập vị trí và kích thước cho bảng
+        getContentPane().add(sp);
 
        
         try {
@@ -37,7 +38,7 @@ public class FreeStructure extends JFrame implements ActionListener {
         // Thiết lập kích thước và vị trí cho JFrame
         setSize(1000, 700);
         setLocation(250, 50);
-        setLayout(null);
+        getContentPane().setLayout(null);
         setVisible(true);
     }
 

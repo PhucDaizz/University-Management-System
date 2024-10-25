@@ -15,12 +15,14 @@ public class TeacherLeaveDetails extends JFrame implements ActionListener {
     TeacherLeaveDetails() {
         getContentPane().setBackground(new Color(250, 170, 206));
         JLabel heading = new JLabel("Tìm kiếm bằng ID Giáo viên");
-        heading.setBounds(20, 20, 150, 20);
-        add(heading);
+        heading.setFont(new Font("Tahoma", Font.BOLD, 14));
+        heading.setBounds(20, 20, 208, 20);
+        getContentPane().add(heading);
         
         choiceEmpID = new Choice();
-        choiceEmpID.setBounds(180, 20, 150, 20);
-        add(choiceEmpID);
+        choiceEmpID.setFont(new Font("Dialog", Font.PLAIN, 14));
+        choiceEmpID.setBounds(234, 20, 150, 20);
+        getContentPane().add(choiceEmpID);
         
         try {
             Conn c = new Conn();
@@ -44,27 +46,30 @@ public class TeacherLeaveDetails extends JFrame implements ActionListener {
         
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(0, 100, 900, 600);
-        add(scrollPane);
+        getContentPane().add(scrollPane);
         
         search = new JButton("Tìm kiếm");
-        search.setBounds(20,70,80,20);
+        search.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        search.setBounds(20,70,104,20);
         search.addActionListener(this);
-        add(search);
+        getContentPane().add(search);
         
         print = new JButton("In");
-        print.setBounds(120,70,80,20);
+        print.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        print.setBounds(146,70,80,20);
         print.addActionListener(this);
-        add(print);
+        getContentPane().add(print);
         
         cancel = new JButton("Hủy");
-        cancel.setBounds(220,70,80,20);
+        cancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        cancel.setBounds(250,69,80,20);
         cancel.addActionListener(this);
-        add(cancel);
+        getContentPane().add(cancel);
         
         
         setSize(900, 700);
         setLocation(300, 100);
-        setLayout(null);	
+        getContentPane().setLayout(null);	
         setVisible(true);
     }
 

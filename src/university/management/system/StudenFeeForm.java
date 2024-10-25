@@ -22,8 +22,8 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/fee.jpg"));
         Image i2 = i1.getImage().getScaledInstance(500, 300, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
-        JLabel img = new JLabel((Icon) null);
-        img.setBounds(400, 50, 500, 30);
+        JLabel img = new JLabel(i3);
+        img.setBounds(410, 50, 451, 300);
         getContentPane().add(img);
 
         // Roll number label

@@ -12,6 +12,7 @@ public class EnterMarks extends JFrame implements ActionListener {
 	JTextField sub1, sub2, sub3, sub4, sub5, mrk1, mrk2, mrk3, mrk4, mrk5;
     JButton submit, cancel;
 	EnterMarks() {
+		getContentPane().setFont(new Font("Dialog", Font.BOLD, 14));
         // Thiết lập màu nền
         getContentPane().setBackground(new Color(252, 245, 210));
 
@@ -20,25 +21,26 @@ public class EnterMarks extends JFrame implements ActionListener {
         Image i2 = i1.getImage().getScaledInstance(400, 300, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel img = new JLabel(i3);
-        img.setBounds(500, 40, 400, 300);
+        img.setBounds(549, 42, 400, 300);
         
         // Thiết lập layout trước khi thêm thành phần
-        setLayout(null);
-        add(img);
+        getContentPane().setLayout(null);
+        getContentPane().add(img);
         
-        JLabel heading = new JLabel("Enter Marks of Student");
+        JLabel heading = new JLabel("Nhâp điểm cho sinh viên");
         heading.setBounds(50,0,500,50);
         heading.setFont(new Font("Tahoma",Font.BOLD,20));
-        add(heading);
+        getContentPane().add(heading);
         
-        JLabel rollno = new JLabel("Select Roll Number");
+        JLabel rollno = new JLabel("Mã sinh viên");
+        rollno.setFont(new Font("Tahoma", Font.BOLD, 14));
         rollno.setBounds(50,70,150,20);
-        add(rollno);
+        getContentPane().add(rollno);
 
         
         choicerollno = new Choice();
         choicerollno.setBounds(200,70,150,20);
-        add(choicerollno);
+        getContentPane().add(choicerollno);
         
         try {
         	Conn c = new Conn();
@@ -50,78 +52,94 @@ public class EnterMarks extends JFrame implements ActionListener {
         }catch (Exception e) {
         	e.printStackTrace();
         }
-        JLabel sem = new JLabel("Select Semester");
+        JLabel sem = new JLabel("Học kỳ");
+        sem.setFont(new Font("Tahoma", Font.BOLD, 14));
         sem.setBounds(50,110,150,20);
-        add(sem);
+        getContentPane().add(sem);
         
-        String semester[] = {"Học kì 1","Học kì 2","Học kì 3","Học kì 4","Học kì 5"};
+        String semester[] = {"Học kỳ 1","Học kỳ 2","Học kỳ 3","Học kỳ 4","Học kỳ 5"};
         comboBox = new JComboBox(semester);
+        comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
         comboBox.setBounds(200,110,150,20);
         comboBox.setBackground(Color.WHITE);
-        add(comboBox);
+        getContentPane().add(comboBox);
         
-        JLabel entersub = new JLabel("Enter subject");
-        entersub.setBounds(100,150,200,40);
-        add(entersub);
+        JLabel entersub = new JLabel("Nhập tên môn học");
+        entersub.setFont(new Font("Tahoma", Font.BOLD, 14));
+        entersub.setBounds(85,150,135,40);
+        getContentPane().add(entersub);
         
-        JLabel entermarks = new JLabel("Enter marks");
-        entermarks.setBounds(320,150,200,40);
-        add(entermarks);
+        JLabel entermarks = new JLabel("Nhập số điểm");
+        entermarks.setFont(new Font("Tahoma", Font.BOLD, 14));
+        entermarks.setBounds(304,150,95,40);
+        getContentPane().add(entermarks);
         
         sub1 = new JTextField();
+        sub1.setFont(new Font("Dialog", Font.PLAIN, 14));
         sub1.setBounds(50,200,200,20);
-        add(sub1);
+        getContentPane().add(sub1);
         
         sub2 = new JTextField();
+        sub2.setFont(new Font("Dialog", Font.PLAIN, 14));
         sub2.setBounds(50,230,200,20);
-        add(sub2);
+        getContentPane().add(sub2);
         
         sub3 = new JTextField();
+        sub3.setFont(new Font("Dialog", Font.PLAIN, 14));
         sub3.setBounds(50,260,200,20);
-        add(sub3);
+        getContentPane().add(sub3);
         
         sub4 = new JTextField();
+        sub4.setFont(new Font("Dialog", Font.PLAIN, 14));
         sub4.setBounds(50,290,200,20);
-        add(sub4);
+        getContentPane().add(sub4);
         
         sub5 = new JTextField();
+        sub5.setFont(new Font("Dialog", Font.PLAIN, 14));
         sub5.setBounds(50,320,200,20);
-        add(sub5);
+        getContentPane().add(sub5);
         
         mrk1 = new JTextField();
+        mrk1.setFont(new Font("Dialog", Font.PLAIN, 14));
         mrk1.setBounds(250,200,200,20);
-        add(mrk1);
+        getContentPane().add(mrk1);
         
         mrk2 = new JTextField();
+        mrk2.setFont(new Font("Dialog", Font.PLAIN, 14));
         mrk2.setBounds(250,230,200,20);
-        add(mrk2);
+        getContentPane().add(mrk2);
         
         mrk3 = new JTextField();
+        mrk3.setFont(new Font("Dialog", Font.PLAIN, 14));
         mrk3.setBounds(250,260,200,20);
-        add(mrk3);
+        getContentPane().add(mrk3);
         
         mrk4 = new JTextField();
+        mrk4.setFont(new Font("Dialog", Font.PLAIN, 14));
         mrk4.setBounds(250,290,200,20);
-        add(mrk4);
+        getContentPane().add(mrk4);
         
         mrk5 = new JTextField();
+        mrk5.setFont(new Font("Dialog", Font.PLAIN, 14));
         mrk5.setBounds(250,320,200,20);
-        add(mrk5);
+        getContentPane().add(mrk5);
         
-        submit = new JButton("Submit");
+        submit = new JButton("Nộp");
+        submit.setFont(new Font("Dialog", Font.BOLD, 14));
         submit.setBounds(70,360,150,25);
         submit.setBackground(Color.black);
         submit.setForeground(Color.WHITE);
         submit.addActionListener(this);
-        add(submit);
+        getContentPane().add(submit);
         
         
-        cancel = new JButton("Cancel");
+        cancel = new JButton("Huỷ");
+        cancel.setFont(new Font("Dialog", Font.BOLD, 14));
         cancel.setBounds(280,360,150,25);
         cancel.setBackground(Color.black);
         cancel.setForeground(Color.WHITE);
         cancel.addActionListener(this);
-        add(cancel);
+        getContentPane().add(cancel);
         
         // Thiết lập kích thước và vị trí cửa sổ
         setSize(1000, 500);  // Tăng chiều cao cửa sổ

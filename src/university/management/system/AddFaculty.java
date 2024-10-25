@@ -20,156 +20,170 @@ public class AddFaculty extends JFrame implements ActionListener {
 
     long f4 = Math.abs((ran.nextLong() % 9000L) + 1000L );
     AddFaculty() {
+    	getContentPane().setFont(new Font("Dialog", Font.BOLD, 18));
 
         getContentPane().setBackground(new Color(166,164,252));
 
         JLabel heading = new JLabel("Thêm thông tin giảng viên");
-        heading.setBounds(310,30,500,50);
+        heading.setVerticalAlignment(SwingConstants.TOP);
+        heading.setBounds(268,31,339,50);
         heading.setFont(new Font("serif",Font.BOLD,30));
-        add(heading);
+        getContentPane().add(heading);
 
         // Name
         JLabel name = new JLabel("Tên");
-        name.setBounds(50,150,100,30);
-        name.setFont(new Font("serif",Font.BOLD,20));
-        add(name);
+        name.setBounds(78,150,100,30);
+        name.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(name);
 
         textName = new JTextField();
-        textName.setBounds(200,150,150,30);
-        add(textName);
+        textName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textName.setBounds(241,150,150,30);
+        getContentPane().add(textName);
 
         // Father name
-        JLabel fname = new JLabel("Tên cha");
-        fname.setBounds(400,150,200,30);
-        fname.setFont(new Font("serif",Font.BOLD,20));
-        add(fname);
+        JLabel fname = new JLabel("Họ ");
+        fname.setBounds(505,150,200,30);
+        fname.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(fname);
 
         textFather = new JTextField();
-        textFather.setBounds(540,150,150,30);
-        add(textFather);
+        textFather.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textFather.setBounds(645,150,150,30);
+        getContentPane().add(textFather);
 
         // Employ ID
         JLabel empID = new JLabel("Mã giảng viên");
-        empID.setBounds(50,200,200,30);
-        empID.setFont(new Font("serif",Font.BOLD,20));
-        add(empID);
+        empID.setBounds(78,200,200,30);
+        empID.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(empID);
 
         empText = new JLabel("1409" + f4);
-        empText.setBounds(200,200,150,30);
-        empText.setFont(new Font("serif",Font.BOLD,20));
-        add(empText);
+        empText.setBounds(241,200,150,30);
+        empText.setFont(new Font("Dialog", Font.PLAIN, 18));
+        getContentPane().add(empText);
 
         // Day Of Birth
         JLabel dob = new JLabel("Ngày sinh");
-        dob.setBounds(400,200,200,30);
-        dob.setFont(new Font("serif",Font.BOLD,20));
-        add(dob);
+        dob.setBounds(505,200,200,30);
+        dob.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(dob);
 
         cdob = new JDateChooser();
-        cdob.setBounds(540,200,150,30);
-        add(cdob);
+        cdob.setBounds(645,200,150,30);
+        getContentPane().add(cdob);
 
         // Address
         JLabel address = new JLabel("Địa chi");
-        address.setBounds(50,250,200,30);
-        address.setFont(new Font("serif",Font.BOLD,20));
-        add(address);
+        address.setBounds(78,250,200,30);
+        address.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(address);
 
         textAddress = new JTextField();
-        textAddress.setBounds(200,250,150,30);
-        add(textAddress);
+        textAddress.setFont(new Font("Dialog", Font.PLAIN, 18));
+        textAddress.setBounds(241,250,150,30);
+        getContentPane().add(textAddress);
 
         // Phone
         JLabel phone = new JLabel("Số điện thoại");
-        phone.setBounds(400,250,200,30);
-        phone.setFont(new Font("serif",Font.BOLD,20));
-        add(phone);
+        phone.setBounds(505,250,200,30);
+        phone.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(phone);
 
         textPhone = new JTextField();
-        textPhone.setBounds(540,250,150,30);
-        add(textPhone);
+        textPhone.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textPhone.setBounds(645,250,150,30);
+        getContentPane().add(textPhone);
 
         // Email
         JLabel email = new JLabel("Email");
-        email.setBounds(50,300,200,30);
-        email.setFont(new Font("serif",Font.BOLD,20));
-        add(email);
+        email.setBounds(78,300,200,30);
+        email.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(email);
 
         textEmail = new JTextField();
-        textEmail.setBounds(200,300,150,30);
-        add(textEmail);
+        textEmail.setFont(new Font("Dialog", Font.PLAIN, 18));
+        textEmail.setBounds(241,300,150,30);
+        getContentPane().add(textEmail);
 
         // Class X
         JLabel M10 = new JLabel("Lớp học X (%)");
-        M10.setBounds(400,300,200,30);
-        M10.setFont(new Font("serif",Font.BOLD,20));
-        add(M10);
+        M10.setBounds(505,300,200,30);
+        M10.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(M10);
 
         textM10 = new JTextField();
-        textM10.setBounds(540,300,150,30);
-        add(textM10);
+        textM10.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textM10.setBounds(645,300,150,30);
+        getContentPane().add(textM10);
 
         // Class XII
         JLabel M12 = new JLabel("Lớp học XII (%)");
-        M12.setBounds(50,350,200,30);
-        M12.setFont(new Font("serif",Font.BOLD,20));
-        add(M12);
+        M12.setBounds(78,350,200,30);
+        M12.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(M12);
 
         textM12 = new JTextField();
-        textM12.setBounds(200,350,150,30);
-        add(textM12);
+        textM12.setFont(new Font("Dialog", Font.PLAIN, 18));
+        textM12.setBounds(241,350,150,30);
+        getContentPane().add(textM12);
 
         // Class XII
         JLabel UserId = new JLabel("Mã định danh");
-        UserId.setBounds(400,350,200,30);
-        UserId.setFont(new Font("serif",Font.BOLD,20));
-        add(UserId);
+        UserId.setBounds(505,350,200,30);
+        UserId.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(UserId);
 
         textUserId = new JTextField();
-        textUserId.setBounds(540,350,150,30);
-        add(textUserId);
+        textUserId.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textUserId.setBounds(645,350,150,30);
+        getContentPane().add(textUserId);
 
         // Qualification
         JLabel qualification = new JLabel("T.độ chuyên môn");
-        qualification.setBounds(50,400,200,30);
-        qualification.setFont(new Font("serif",Font.BOLD,20));
-        add(qualification);
+        qualification.setBounds(78,400,200,30);
+        qualification.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(qualification);
 
         String course[] = {"Đại số", "Thể chất", "Tin học cơ bản", "Mạng", "Cơ sở sữ liệu", "Triết"};
         courseBox = new JComboBox(course);
-        courseBox.setBounds(200,400,150,30);
+        courseBox.setFont(new Font("Dialog", Font.PLAIN, 18));
+        courseBox.setBounds(241,400,150,30);
         courseBox.setBackground(Color.WHITE);
-        add(courseBox);
+        getContentPane().add(courseBox);
 
         // Department
         JLabel department = new JLabel("Khoa");
-        department.setBounds(400,400,200,30);
-        department.setFont(new Font("serif",Font.BOLD,20));
-        add(department);
+        department.setBounds(505,400,200,30);
+        department.setFont(new Font("Dialog", Font.BOLD, 18));
+        getContentPane().add(department);
 
         String Department[] = {"Khoa học máy tính", "Cơ khí", "Oto", "Điện", "Trí tuệ nhân tạo"};
         departmentBox = new JComboBox(Department);
-        departmentBox.setBounds(540,400,150,30);
+        departmentBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        departmentBox.setBounds(645,400,150,30);
         departmentBox.setBackground(Color.WHITE);
-        add(departmentBox);
+        getContentPane().add(departmentBox);
 
         submit = new JButton("Nộp");
-        submit.setBounds(250,550,120,30);
+        submit.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        submit.setBounds(322,511,120,30);
         submit.setBackground(Color.GREEN);
         submit.setForeground(Color.WHITE);
         submit.addActionListener(this);
-        add(submit);
+        getContentPane().add(submit);
 
         cancel = new JButton("Huỷ");
-        cancel.setBounds(400,550,120,30);
+        cancel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        cancel.setBounds(472,511,120,30);
         cancel.setBackground(Color.RED);
         cancel.setForeground(Color.WHITE);
         cancel.addActionListener(this);
-        add(cancel);
+        getContentPane().add(cancel);
 
         setSize(900, 700);
         setLocation(350,50);
-        setLayout(null);
+        getContentPane().setLayout(null);
         setVisible(true);
     }
 

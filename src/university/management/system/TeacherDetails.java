@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import javax.swing.*;
 
 import net.proteanit.sql.DbUtils;
+import java.awt.Font;
 
 public class TeacherDetails extends JFrame implements ActionListener {
 	Choice choice;
@@ -18,12 +19,14 @@ public class TeacherDetails extends JFrame implements ActionListener {
 		getContentPane().setBackground(new Color(192,164,252));
 		
 		JLabel heading = new JLabel("Tìm kiếm mã giảng viên");
-		heading.setBounds(20,20,150,20);
-		add(heading);
+		heading.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		heading.setBounds(20,20,180,20);
+		getContentPane().add(heading);
 		
 		choice = new Choice();
-		choice.setBounds(180,20,150,20);;
-		add(choice);
+		choice.setFont(new Font("Dialog", Font.PLAIN, 14));
+		choice.setBounds(220,22,150,20);;
+		getContentPane().add(choice);
 		
 		try {
 			Conn c = new Conn();
@@ -45,36 +48,41 @@ public class TeacherDetails extends JFrame implements ActionListener {
 		}
 		JScrollPane js = new JScrollPane(table);
 		js.setBounds(0,100,900,600);
-		add(js);
+		getContentPane().add(js);
 		
 		search = new JButton("Tìm kiếm");
-		search.setBounds(20,70,90,20);
+		search.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		search.setBounds(20,70,112,20);
 		search.addActionListener(this);
-		add(search);
+		getContentPane().add(search);
 		
 		
 		print = new JButton("In");
-		print.setBounds(120,70,80,20);
+		print.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		print.setBounds(157,69,80,20);
 		print.addActionListener(this);
-		add(print);
+		getContentPane().add(print);
 		
 		add = new JButton("Thêm");
-		add.setBounds(220,70,80,20);
+		add.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add.setBounds(257,69,80,20);
 		add.addActionListener(this);
-		add(add);
+		getContentPane().add(add);
 		
 		update = new JButton("Cập nhật");
-		update.setBounds(320,70,90,20);
+		update.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		update.setBounds(362,69,112,20);
 		update.addActionListener(this);
-		add(update);
+		getContentPane().add(update);
 		
 		cancel = new JButton("Hủy bỏ");
-		cancel.setBounds(420,70,90,20);
+		cancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		cancel.setBounds(498,70,90,20);
 		cancel.addActionListener(this);
-		add(cancel);
+		getContentPane().add(cancel);
 		
 		
-		setLayout(null);
+		getContentPane().setLayout(null);
 		setSize(900,700);
 		setLocation(300,100);
 		setVisible(true);

@@ -26,18 +26,19 @@ public class StudentLeave extends JFrame implements ActionListener {
 		getContentPane().setBackground(new Color(210,232,252));
 		
 		JLabel heading = new JLabel("Đơn xin nghỉ phép (Sinh viên)");
-		heading.setBounds(40, 50,300,30);
+		heading.setBounds(60, 50,300,30);
 		heading.setFont(new Font("Tahoma", Font.BOLD, 20));
-		add(heading);
+		getContentPane().add(heading);
 		
 		JLabel RollNoSE = new JLabel("Tìm kiếm MSSV");
 		RollNoSE.setBounds(60,100,200,20);
 		RollNoSE.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(RollNoSE);
+		getContentPane().add(RollNoSE);
 		
 		choiceRollNo = new Choice();
-		choiceRollNo.setBounds(60,130,200,20);
-		add(choiceRollNo);
+		choiceRollNo.setFont(new Font("Dialog", Font.PLAIN, 14));
+		choiceRollNo.setBounds(60,135,200,20);
+		getContentPane().add(choiceRollNo);
 		
 		try {
 			Conn c = new Conn();
@@ -53,42 +54,45 @@ public class StudentLeave extends JFrame implements ActionListener {
 		JLabel lbldate = new JLabel("Ngày tháng năm");
 		lbldate.setBounds(60, 180, 200, 20);
 		lbldate.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(lbldate);
+		getContentPane().add(lbldate);
 		
 		selDate = new JDateChooser();
 		selDate.setBounds(60, 210, 200, 25);
-		add(selDate);
+		getContentPane().add(selDate);
 		
 		JLabel time = new JLabel("Khoảng thời gian");
 		time.setBounds(60, 260, 200, 20);
 		time.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(time);
+		getContentPane().add(time);
 		
 		choTime = new Choice();
+		choTime.setFont(new Font("Dialog", Font.PLAIN, 14));
 		choTime.setBounds(60, 290, 200, 20);
 		choTime.add("Full Day");
 		choTime.add("Half Day");
-		add(choTime);
+		getContentPane().add(choTime);
 		
 		submit = new JButton("Chấp nhận");
-		submit.setBounds(60, 350, 100, 25);
-		submit.setBackground(Color.black);
-		submit.setForeground(Color.white);
+		submit.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		submit.setBounds(60, 350, 118, 25);
+		submit.setBackground(Color.GREEN);
+		submit.setForeground(Color.WHITE);
 		submit.addActionListener(this);
-		add(submit);
+		getContentPane().add(submit);
 		
 		cancel = new JButton("Hủy bỏ");
-		cancel.setBounds(200, 350, 100, 25);
-		cancel.setBackground(Color.black);
+		cancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		cancel.setBounds(200, 350, 118, 25);
+		cancel.setBackground(Color.RED);
 		cancel.setForeground(Color.white);
 		cancel.addActionListener(this);
-		add(cancel);
+		getContentPane().add(cancel);
 		
 		
 		
 		setSize(500,550);
 		setLocation(550,100);
-		setLayout(null);
+		getContentPane().setLayout(null);
 		setVisible(true);
 		
 		
