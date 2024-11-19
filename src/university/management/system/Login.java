@@ -10,8 +10,14 @@ public class Login extends JFrame implements ActionListener {
 
     JTextField textFieldName;
     JPasswordField passwordField;
-    JButton login, back;
+    JButton login, back, register;
     Login() {
+        
+        register = new JButton("Đăng ký"); 
+        register.setFont(new Font("Tahoma", Font.BOLD, 15)); 
+        register.setBounds(107, 200, 121, 37); 
+        register.addActionListener(this); 
+        getContentPane().add(register);
 
         JLabel labelName = new JLabel("Username : ");
         labelName.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -33,21 +39,22 @@ public class Login extends JFrame implements ActionListener {
         passwordField.setBounds(150,99,150,20);
         getContentPane().add(passwordField);
 
-        login = new JButton("Login");
+        login = new JButton("Đăng nhập");
         login.setFont(new Font("Tahoma", Font.BOLD, 15));
-        login.setBounds(41,174,120,30);
+        login.setBounds(40,145,120,30);
         login.setBackground(Color.BLACK);
         login.setForeground(Color.WHITE);
         login.addActionListener(this);
         getContentPane().add(login);
 
-        back = new JButton("Back");
+        back = new JButton("Trở về");
         back.setFont(new Font("Tahoma", Font.BOLD, 15));
-        back.setBounds(203,174,120,30);
+        back.setBounds(201,145,120,30);
         back.setBackground(Color.BLACK);
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         getContentPane().add(back);
+       
 
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/user.png"));
         Image i2 =  i1.getImage().getScaledInstance(200,200,Image.SCALE_DEFAULT);
@@ -60,14 +67,15 @@ public class Login extends JFrame implements ActionListener {
         Image i22 =  i11.getImage().getScaledInstance(600,300,Image.SCALE_DEFAULT);
         ImageIcon i33 = new ImageIcon(i22);
         JLabel image = new JLabel(i33);
-        image.setBounds(0,0,600,300);
+        image.setBounds(0,-27,600,300);
         getContentPane().add(image);
 
         setSize(600, 300);
         setLocation(500, 250);
         getContentPane().setLayout(null);
+        
+        
         setVisible(true);
-
     }
 
     @Override
@@ -92,7 +100,12 @@ public class Login extends JFrame implements ActionListener {
             }catch(Exception ex){
                 ex.printStackTrace();
             }
-        } else {
+        } 
+        else if (e.getSource() == register) {
+        	new Register();
+        }
+        
+        else {
             setVisible(false);
         }
     }
