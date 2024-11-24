@@ -11,11 +11,13 @@ import java.sql.ResultSet;
 public class UpdateTeacher extends JFrame implements ActionListener {
     JTextField textAddress, textPhone, textEmail, textUserId, textcourse, textbranch;
     JLabel empText;
+    JLabel textName, textFather, dobText, textM10, textM12;
     JButton cancel, submit;
     Choice cEMPID;
+    String selectedEmpId;
 
     UpdateTeacher() {
-    	getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 16));
+        getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 16));
         getContentPane().setBackground(new Color(230, 210, 252));
 
         JLabel heading = new JLabel("Cập nhật thông tin về giáo viên");
@@ -23,7 +25,7 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         heading.setFont(new Font("serif", Font.BOLD, 30));
         getContentPane().add(heading);
 
-        JLabel empID = new JLabel(" Mã nhân viên");
+        JLabel empID = new JLabel("Mã nhân viên");
         empID.setBounds(50, 100, 128, 20);
         empID.setFont(new Font("Serif", Font.BOLD, 20));
         getContentPane().add(empID);
@@ -49,7 +51,7 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         name.setFont(new Font("serif", Font.BOLD, 20));
         getContentPane().add(name);
 
-        JLabel textName = new JLabel();
+        textName = new JLabel();
         textName.setFont(new Font("Dialog", Font.PLAIN, 16));
         textName.setBounds(200, 150, 150, 30);
         getContentPane().add(textName);
@@ -60,12 +62,12 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         fname.setFont(new Font("serif", Font.BOLD, 20));
         getContentPane().add(fname);
 
-        JLabel textFather = new JLabel();
+        textFather = new JLabel();
         textFather.setFont(new Font("Tahoma", Font.PLAIN, 16));
         textFather.setBounds(540, 150, 150, 30);
         getContentPane().add(textFather);
 
-        // Employ ID
+        // Employee ID
         JLabel EMPIDD = new JLabel("Mã giảng viên");
         EMPIDD.setBounds(50, 200, 200, 30);
         EMPIDD.setFont(new Font("serif", Font.BOLD, 20));
@@ -76,16 +78,16 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         empText.setFont(new Font("Dialog", Font.PLAIN, 16));
         getContentPane().add(empText);
 
-        // Day Of Birth
+        // Date of Birth
         JLabel dob = new JLabel("Ngày sinh");
         dob.setBounds(400, 200, 120, 30);
         dob.setFont(new Font("serif", Font.BOLD, 20));
         getContentPane().add(dob);
 
-        JLabel dobdob = new JLabel();
-        dobdob.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        dobdob.setBounds(550, 200, 150, 30);
-        getContentPane().add(dobdob);
+        dobText = new JLabel();
+        dobText.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dobText.setBounds(550, 200, 150, 30);
+        getContentPane().add(dobText);
 
         // Address
         JLabel address = new JLabel("Địa chỉ");
@@ -126,7 +128,7 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         class_X.setFont(new Font("serif", Font.BOLD, 20));
         getContentPane().add(class_X);
 
-        JLabel textM10 = new JLabel();
+        textM10 = new JLabel();
         textM10.setFont(new Font("Tahoma", Font.PLAIN, 16));
         textM10.setBounds(540, 300, 150, 30);
         getContentPane().add(textM10);
@@ -137,7 +139,7 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         class_XII.setFont(new Font("serif", Font.BOLD, 20));
         getContentPane().add(class_XII);
 
-        JLabel textM12 = new JLabel();
+        textM12 = new JLabel();
         textM12.setFont(new Font("Dialog", Font.PLAIN, 16));
         textM12.setBounds(200, 350, 150, 30);
         getContentPane().add(textM12);
@@ -153,12 +155,12 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         textUserId.setBounds(540, 350, 150, 30);
         getContentPane().add(textUserId);
 
-        // Qualification
-        JLabel education = new JLabel("Trình độ ");
+        // Education
+        JLabel education = new JLabel("Trình độ");
         education.setBounds(50, 400, 200, 30);
         education.setFont(new Font("serif", Font.BOLD, 20));
         getContentPane().add(education);
-        
+
         textcourse = new JTextField();
         textcourse.setFont(new Font("Dialog", Font.PLAIN, 16));
         textcourse.setBounds(200, 400, 150, 30);
@@ -174,29 +176,29 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         textbranch.setFont(new Font("Tahoma", Font.PLAIN, 16));
         textbranch.setBounds(540, 400, 150, 30);
         getContentPane().add(textbranch);
-        
+
         try {
-        	Conn c = new Conn();
-        	String query = "select * from teacher where empId = '"+cEMPID.getSelectedItem() +"'";
-        	ResultSet resultSet =c.statement.executeQuery(query);
-        	while (resultSet.next()) {
-        		textName.setText(resultSet.getString("name"));
-        		textFather.setText(resultSet.getString("fname"));
-        		dobdob.setText(resultSet.getString("dob"));
-        		textAddress.setText(resultSet.getString("address"));
-        		textPhone.setText(resultSet.getString("phone"));
-        		textEmail.setText(resultSet.getString("email"));
-        		textM10.setText(resultSet.getString("class_X"));
-        		textM12.setText(resultSet.getString("class_XII"));
-        		textUserId.setText(resultSet.getString("userId"));
-        		empText.setText(resultSet.getString("empId"));
-        		textcourse.setText(resultSet.getString("education"));
-        		textbranch.setText(resultSet.getString("department"));
-        	}
-        }catch(Exception E) {
-        	E.printStackTrace();
-        }   // de t thu copy doan tren
-       
+            Conn c = new Conn();
+            String query = "select * from teacher where empId = '" + cEMPID.getSelectedItem() + "'";
+            ResultSet resultSet = c.statement.executeQuery(query);
+            while (resultSet.next()) {
+                textName.setText(resultSet.getString("name"));
+                textFather.setText(resultSet.getString("fname"));
+                dobText.setText(resultSet.getString("dob"));
+                textAddress.setText(resultSet.getString("address"));
+                textPhone.setText(resultSet.getString("phone"));
+                textEmail.setText(resultSet.getString("email"));
+                textM10.setText(resultSet.getString("class_X"));
+                textM12.setText(resultSet.getString("class_XII"));
+                textUserId.setText(resultSet.getString("userId"));
+                empText.setText(resultSet.getString("empId"));
+                textcourse.setText(resultSet.getString("education"));
+                textbranch.setText(resultSet.getString("department"));
+            }
+        } catch (Exception E) {
+            E.printStackTrace();
+        }
+
         cEMPID.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -205,25 +207,24 @@ public class UpdateTeacher extends JFrame implements ActionListener {
                     String query = "SELECT * FROM teacher WHERE empId = '" + cEMPID.getSelectedItem() + "'";
                     ResultSet resultSet = c.statement.executeQuery(query);
                     while (resultSet.next()) {
-                    	textName.setText(resultSet.getString("name"));
-                		textFather.setText(resultSet.getString("fname"));
-                		dobdob.setText(resultSet.getString("dob"));
-                		textAddress.setText(resultSet.getString("address"));
-                		textPhone.setText(resultSet.getString("phone"));
-                		textEmail.setText(resultSet.getString("email"));
-                		textM10.setText(resultSet.getString("class_X"));
-                		textM12.setText(resultSet.getString("class_XII"));
-                		textUserId.setText(resultSet.getString("userId"));
-                		empText.setText(resultSet.getString("empId"));
-                		textcourse.setText(resultSet.getString("education"));
-                		textbranch.setText(resultSet.getString("department"));
-                	}
+                        textName.setText(resultSet.getString("name"));
+                        textFather.setText(resultSet.getString("fname"));
+                        dobText.setText(resultSet.getString("dob"));
+                        textAddress.setText(resultSet.getString("address"));
+                        textPhone.setText(resultSet.getString("phone"));
+                        textEmail.setText(resultSet.getString("email"));
+                        textM10.setText(resultSet.getString("class_X"));
+                        textM12.setText(resultSet.getString("class_XII"));
+                        textUserId.setText(resultSet.getString("userId"));
+                        empText.setText(resultSet.getString("empId"));
+                        textcourse.setText(resultSet.getString("education"));
+                        textbranch.setText(resultSet.getString("department"));
+                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         });
-
 
         submit = new JButton("Nộp");
         submit.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -247,26 +248,57 @@ public class UpdateTeacher extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    UpdateTeacher(String empId) {
+        this();  // Gọi constructor gốc
+        this.selectedEmpId = empId;
+        
+        try {
+            Conn c = new Conn();
+            String query = "SELECT * FROM teacher WHERE empId = '" + selectedEmpId + "'";
+            ResultSet resultSet = c.statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                textName.setText(resultSet.getString("name"));
+                textFather.setText(resultSet.getString("fname"));
+                dobText.setText(resultSet.getString("dob"));
+                textAddress.setText(resultSet.getString("address"));
+                textPhone.setText(resultSet.getString("phone"));
+                textEmail.setText(resultSet.getString("email"));
+                textM10.setText(resultSet.getString("class_X"));
+                textM12.setText(resultSet.getString("class_XII"));
+                textUserId.setText(resultSet.getString("userId"));
+                empText.setText(resultSet.getString("empId"));
+                textcourse.setText(resultSet.getString("education"));
+                textbranch.setText(resultSet.getString("department"));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit) {
-            String empid =empText.getText();
-            String address =textAddress.getText();
+            String empid = empText.getText();
+            String address = textAddress.getText();
             String phone = textPhone.getText();
             String email = textEmail.getText();
-            String course = textcourse.getText();
-            String branch = textbranch.getText();
-            try {
-            	String Q = "update teacher set address = '" + address + "', phone = '" + phone + "', email = '" + email + "', education = '" + course + "',department= '" + branch  +"',WHERE empId = '" +  empid + "'" ;
-            	JOptionPane.showMessageDialog(null, "Submitted!");
-            	setVisible(false);
-            }catch(Exception E) {
-            	E.printStackTrace();
-            }
+            String education = textcourse.getText();
+            String department = textbranch.getText();
             
+            try {
+                Conn c = new Conn();
+                String query = "UPDATE teacher SET address = '" + address + "', phone = '" + phone + 
+                             "', email = '" + email + "', education = '" + education + 
+                             "', department = '" + department + "' WHERE empId = '" + empid + "'";
+                c.statement.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Thông tin đã được cập nhật!");
+                setVisible(false);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         } else {
-        	
-            setVisible(false);
+            dispose();
         }
     }
 

@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class EnterMarks extends JFrame implements ActionListener {
 	Choice choicerollno;
@@ -57,12 +60,20 @@ public class EnterMarks extends JFrame implements ActionListener {
         sem.setBounds(50,110,150,20);
         getContentPane().add(sem);
         
-        String semester[] = {"Học kỳ 1","Học kỳ 2","Học kỳ 3","Học kỳ 4","Học kỳ 5"};
+        String semester[] = {"semester1", "semester2", "semester3", "semester4", "semester5", "semester6", "semester7", "semester8"};
         comboBox = new JComboBox(semester);
         comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
         comboBox.setBounds(200,110,150,20);
         comboBox.setBackground(Color.WHITE);
         getContentPane().add(comboBox);
+        comboBox.addActionListener(new ActionListener() { 
+        	public void actionPerformed(ActionEvent e) {
+        		String stuId = (String) choicerollno.getSelectedItem(); 
+        		String semester = (String) comboBox.getSelectedItem(); 
+        		getSubjects(stuId, semester);
+        		getMarks(stuId, semester);
+        		} 
+        	});
         
         JLabel entersub = new JLabel("Nhập tên môn học");
         entersub.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -146,6 +157,70 @@ public class EnterMarks extends JFrame implements ActionListener {
         setLocation(300, 150);
         setVisible(true);
     }
+	
+	private String[] getSubjects(String stuID, String semester) {
+		String sql = "SELECT subj1, subj2, subj3, subj4, sbj5 FROM subject WHERE stuID = ? AND semester = ?";
+		String[] subjects = new String[5];
+    	try (Connection conn = Conn.getConnection(); 
+    		PreparedStatement stmt = conn.prepareStatement(sql)) { 
+    		
+    		stmt.setString(1, stuID); 
+    		stmt.setString(2, semester);
+    		
+    		try (ResultSet rs = stmt.executeQuery()) { 
+    			if (rs.next()) { 
+    				sub1.setText(rs.getString("subj1")); 
+    				sub2.setText(rs.getString("subj2")); 
+    				sub3.setText(rs.getString("subj3")); 
+    				sub4.setText(rs.getString("subj4")); 
+    				sub5.setText(rs.getString("sbj5"));
+    				} 
+    			} 
+    		} catch (SQLException e) { 
+    			e.printStackTrace(); 
+    		} return subjects;
+    }
+	
+	private void getMarks(String stuID, String semester) {
+		String sql = "SELECT mrk1, mrk2, mrk3, mrk4, mrk5 FROM marks WHERE stuID = ? AND semester = ?";
+		try (Connection conn = Conn.getConnection(); 
+	    	PreparedStatement stmt = conn.prepareStatement(sql)) { 
+	    		
+	    	stmt.setString(1, stuID); 
+	    	stmt.setString(2, semester);
+	    		
+	    	try (ResultSet rs = stmt.executeQuery()) { 
+	    		if (rs.next()) { 
+	    			mrk1.setText(rs.getString("mrk1")); 
+	    			mrk2.setText(rs.getString("mrk2")); 
+	    			mrk3.setText(rs.getString("mrk3")); 
+	    			mrk4.setText(rs.getString("mrk4")); 
+	    			mrk5.setText(rs.getString("mrk5"));
+	    		} 
+	    	} 
+	    } catch (SQLException e) { 
+	    	e.printStackTrace(); 
+	    }
+	}
+	
+	public boolean isEnterPoint(String stuID, String semester) {
+		String querry = "SELECT COUNT(*) FROM marks where stuID = ? AND semester = ?";
+		try (Connection conn = Conn.getConnection(); 
+	    		PreparedStatement stmt = conn.prepareStatement(querry)) { 
+	    		
+	    		stmt.setString(1, stuID); 
+	    		stmt.setString(2, semester);
+	    		
+	    		try (ResultSet rs = stmt.executeQuery()) { 
+	    			if (rs.next()) { 
+	    				int count = rs.getInt(1); 
+	    				return count > 0;
+	    			} 
+	    		} 
+	    } catch (SQLException e) { 
+	    	e.printStackTrace(); 
+	    } return false;
+	}
     
 
     public void actionPerformed(ActionEvent e) {
@@ -155,11 +230,17 @@ public class EnterMarks extends JFrame implements ActionListener {
 			String Q2 = "insert into marks values('"+choicerollno.getSelectedItem()+"','"+comboBox.getSelectedItem()+"','"+mrk1.getText()+"','"+mrk2.getText()+"','"+mrk3.getText()+"','"+mrk4.getText()+"','"+mrk5.getText()+"')";
 			
     		try {
-    			Conn c = new Conn();
-    			c.statement.executeUpdate(Q1);
-    			c.statement.executeUpdate(Q2);
-                JOptionPane.showMessageDialog(null, "Successfull");
-                setVisible(false);
+    			if(isEnterPoint(choicerollno.getSelectedItem(),(String)comboBox.getSelectedItem())) {
+    				JOptionPane.showMessageDialog(null, "Điểm đã được nhập ở kỳ này rồi");
+    			}
+    			else {
+    				Conn c = new Conn();
+    				c.statement.executeUpdate(Q1);
+    				c.statement.executeUpdate(Q2);
+    				JOptionPane.showMessageDialog(null, "Nhập điểm thành công");
+    				setVisible(false);    				
+    			}
+    			
                 
             } catch (Exception E) {
                 E.printStackTrace();

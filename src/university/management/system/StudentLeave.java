@@ -6,7 +6,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,14 +22,14 @@ import com.toedter.calendar.JDateChooser;
 public class StudentLeave extends JFrame implements ActionListener {
 	Choice choiceRollNo, choTime;
 	JDateChooser selDate;
-	
+	JButton btnCpNht;
 	JButton submit, cancel;
 	StudentLeave() {
 		
 		getContentPane().setBackground(new Color(210,232,252));
 		
 		JLabel heading = new JLabel("Đơn xin nghỉ phép (Sinh viên)");
-		heading.setBounds(60, 50,300,30);
+		heading.setBounds(60, 50,320,30);
 		heading.setFont(new Font("Tahoma", Font.BOLD, 20));
 		getContentPane().add(heading);
 		
@@ -74,7 +77,7 @@ public class StudentLeave extends JFrame implements ActionListener {
 		
 		submit = new JButton("Chấp nhận");
 		submit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		submit.setBounds(60, 350, 118, 25);
+		submit.setBounds(70, 365, 118, 25);
 		submit.setBackground(Color.GREEN);
 		submit.setForeground(Color.WHITE);
 		submit.addActionListener(this);
@@ -82,7 +85,7 @@ public class StudentLeave extends JFrame implements ActionListener {
 		
 		cancel = new JButton("Hủy bỏ");
 		cancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cancel.setBounds(200, 350, 118, 25);
+		cancel.setBounds(324, 365, 118, 25);
 		cancel.setBackground(Color.RED);
 		cancel.setForeground(Color.white);
 		cancel.addActionListener(this);
@@ -93,10 +96,37 @@ public class StudentLeave extends JFrame implements ActionListener {
 		setSize(500,550);
 		setLocation(550,100);
 		getContentPane().setLayout(null);
+		
+		btnCpNht = new JButton("Cập nhật");
+		btnCpNht.setForeground(Color.WHITE);
+		btnCpNht.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnCpNht.setBackground(new Color(102, 153, 255));
+		btnCpNht.setBounds(198, 365, 118, 25);
+		btnCpNht.addActionListener(this);
+		getContentPane().add(btnCpNht);
 		setVisible(true);
 		
 		
 		
+	}
+	
+	private boolean isOnLeave(String id, String ondate) {
+		String sql = "SELECT * FROM studentLeave WHERE stuID = ? AND date = ?";
+		try (Connection conn = Conn.getConnection(); 
+	    	PreparedStatement stmt = conn.prepareStatement(sql)) { 
+			
+	    	stmt.setString(1, id); 
+	   		stmt.setString(2, ondate);
+	   		try (ResultSet rs = stmt.executeQuery()) { 
+	   			if (rs.next()) { 
+	   				// Có ít nhất một bản ghi tồn tại 
+	   				return true; 
+	   			}
+	   		}
+	   	} catch (SQLException e) { 
+			e.printStackTrace(); 
+		}
+		return false;
 	}
 	
 	
@@ -107,23 +137,44 @@ public class StudentLeave extends JFrame implements ActionListener {
 			String date = ((JTextField) selDate.getDateEditor().getUiComponent()).getText();
 			String time = choTime.getSelectedItem();
 			
-			String Q = "insert into studentLeave values('"+rollno+"','"+date+"', '"+time+"')";
-			try {
-				Conn c = new Conn();
-				c.statement.executeUpdate(Q);
-				JOptionPane.showMessageDialog(null, "Xác nhận nghỉ phép");
-				setVisible(false);
-				
-				
-			}catch (Exception E) {
-				E.printStackTrace();
+			if (isOnLeave(rollno, date)) { 
+				JOptionPane.showMessageDialog(null, "Bạn đã xin nghỉ phép ngày này rồi!"); 
+			} else { 
+				String Q = "insert into studentLeave values('" + rollno + "','" + date + "', '" + time + "')"; 
+				try { 
+					Conn c = new Conn(); 
+					c.statement.executeUpdate(Q); 
+					JOptionPane.showMessageDialog(null, "Xác nhận nghỉ phép"); 
+					setVisible(false); 
+				} catch (Exception E) { 
+					E.printStackTrace(); 
+				}
+			}	
+		}
+		else if(e.getSource() == btnCpNht) {
+			String rollno = choiceRollNo.getSelectedItem();
+			String date = ((JTextField) selDate.getDateEditor().getUiComponent()).getText();
+			String time = choTime.getSelectedItem();
+			if(isOnLeave(rollno, date)) {
+				String sql = "UPDATE studentLeave SET time = '"+ time +"' WHERE stuID = '"+ rollno +"' AND date = '"+ date +"' ";
+				JOptionPane.showMessageDialog(null, "Cập nhật thành công"); 
+				try { 
+					Conn c = new Conn(); 
+					c.statement.executeUpdate(sql);
+				} catch (Exception E) { 
+					E.printStackTrace(); 
+				}
 			}
-		}else {
+			else {
+				JOptionPane.showMessageDialog(null, "Bạn chưa xin nghỉ ngày này nên chưa thể cập nhật"); 
+			}
+		}
+		
+		else {
 			setVisible(false);
 		}
 	}
 	public static void main(String[] args) {
 		new StudentLeave();
 	}
-
 }

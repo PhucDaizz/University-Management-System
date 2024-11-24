@@ -11,8 +11,10 @@ import java.sql.*;
 public class updateStudent extends JFrame implements ActionListener {
     JTextField textAddress, textPhone, textEmail, textUserId, textCourse, textBranch;
     JLabel empText;
+    JLabel textName, textFather, dobText, textM10, textM12;
     JButton cancel, submit;
     Choice cEMPID;
+    String selectedStuId;
 
     updateStudent() {
     	getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -50,7 +52,7 @@ public class updateStudent extends JFrame implements ActionListener {
         name.setFont(new Font("Dialog", Font.BOLD, 20));
         getContentPane().add(name);
 
-        JLabel textName = new JLabel();
+        textName = new JLabel();
         textName.setFont(new Font("Tahoma", Font.PLAIN, 16));
         textName.setBounds(200, 150, 150, 30);
         getContentPane().add(textName);
@@ -61,7 +63,7 @@ public class updateStudent extends JFrame implements ActionListener {
         fname.setFont(new Font("Dialog", Font.BOLD, 20));
         getContentPane().add(fname);
 
-        JLabel textFather = new JLabel();
+        textFather = new JLabel();
         textFather.setFont(new Font("Tahoma", Font.PLAIN, 16));
         textFather.setBounds(540, 150, 150, 30);
         getContentPane().add(textFather);
@@ -83,7 +85,7 @@ public class updateStudent extends JFrame implements ActionListener {
         dob.setFont(new Font("Dialog", Font.BOLD, 20));
         getContentPane().add(dob);
 
-        JLabel dobText = new JLabel();
+        dobText = new JLabel();
         dobText.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dobText.setBounds(540, 200, 150, 30);
         getContentPane().add(dobText);
@@ -127,7 +129,7 @@ public class updateStudent extends JFrame implements ActionListener {
         class_X .setFont(new Font("Dialog", Font.BOLD, 20));
         getContentPane().add(class_X );
 
-        JLabel textM10 = new JLabel();
+        textM10 = new JLabel();
         textM10.setFont(new Font("Tahoma", Font.PLAIN, 16));
         textM10.setBounds(540, 300, 150, 30);
         getContentPane().add(textM10);
@@ -138,7 +140,7 @@ public class updateStudent extends JFrame implements ActionListener {
         class_XII.setFont(new Font("Dialog", Font.BOLD, 20));
         getContentPane().add(class_XII);
 
-        JLabel textM12 = new JLabel();
+        textM12 = new JLabel();
         textM12.setFont(new Font("Tahoma", Font.PLAIN, 16));
         textM12.setBounds(200, 350, 150, 30);
         getContentPane().add(textM12);
@@ -256,6 +258,34 @@ public class updateStudent extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    updateStudent(String stuId) {
+        this();  // Gọi constructor gốc
+        this.selectedStuId = stuId;
+        // Load dữ liệu của sinh viên được chọn
+        try {
+            Conn c = new Conn();
+            String query = "SELECT * FROM student WHERE stuID = '" + selectedStuId + "'";
+            ResultSet resultSet = c.statement.executeQuery(query);
+
+            if (resultSet.next()) {
+            	textName.setText(resultSet.getString("name"));
+                textFather.setText(resultSet.getString("fname"));
+                dobText.setText(resultSet.getString("dob"));
+                textAddress.setText(resultSet.getString("address"));
+                textPhone.setText(resultSet.getString("phone"));
+                textEmail.setText(resultSet.getString("email"));
+                textM10.setText(resultSet.getString("class_X"));
+                textM12.setText(resultSet.getString("class_XII"));
+                textUserId.setText(resultSet.getString("userId"));
+                empText.setText(resultSet.getString("stuID"));
+                textCourse.setText(resultSet.getString("course"));
+                textBranch.setText(resultSet.getString("branch"));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit) {
@@ -275,7 +305,7 @@ public class updateStudent extends JFrame implements ActionListener {
                 ex.printStackTrace();
             }
         } else {
-            setVisible(false);
+        	dispose();
         }
     }
 

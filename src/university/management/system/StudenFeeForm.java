@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -98,10 +100,17 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         textsemester.setBounds( 40, 260, 150,  20);
         getContentPane().add(textsemester);
 
-        String semester[] = {"Học kì 1", "Học kì 2", "Học kì 3", "Học kì 4", "Học kì 5", "Học kì 6", "Học kì 7", "Học kì 8"};
+        String semester[] = {"semester1", "semester2", "semester3", "semester4", "semester5", "semester6", "semester7", "semester8"};
         semesterBox = new JComboBox(semester);
         semesterBox.setBounds(200, 260, 150, 20);
         getContentPane().add(semesterBox);
+        semesterBox.addActionListener(new ActionListener() { 
+        	public void actionPerformed(ActionEvent e) { 
+        		String stuId = (String) rollNumber.getSelectedItem(); 
+        		String semester = (String) semesterBox.getSelectedItem(); 
+        		updateCourseBox(stuId, semester); 
+        		} 
+        	});
         
         
         JLabel total = new JLabel( "Số tiền phải trả");
@@ -174,23 +183,30 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
+    
+    private void updateCourseBox(String stuId, String semester) { 
+    	String[] subjects = getSubjects(stuId, semester); 
+    	courseBox.removeAllItems(); 
+    	for (String subject : subjects) { 
+    		courseBox.addItem(subject); 
+    	} 
+    }
+	
 
     private void loadRollNumbers() {
-        // Load roll numbers from the database
         try {
-            Conn c = new Conn(); // Create a connection object
-            ResultSet rs = c.statement.executeQuery("select *from student"); // Query the student table
+            Conn c = new Conn(); 
+            ResultSet rs = c.statement.executeQuery("select *from student"); 
 
             while (rs.next()) {
-                rollNumber.add(rs.getString("stuID")); // Populate roll numbers
+                rollNumber.add(rs.getString("stuID")); 
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage()); // Show error message
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage()); 
         }
     }
 
     private void fetchStudentDetails() {
-        // Fetch student details based on selected roll number
         try {
             Conn c = new Conn();
             String query = "select *from student WHERE stuID = '" + rollNumber.getSelectedItem() + "'";
@@ -200,7 +216,6 @@ public class StudenFeeForm extends JFrame implements ActionListener {
                 textName.setText(resultSet.getString("name"));
                 textFName.setText(resultSet.getString("fname"));
             } else {
-                // Clear labels if no student found
                 textName.setText("");
                 textFName.setText("");
             }
@@ -209,6 +224,49 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         }
     }
 
+    private String[] getSubjects(String stuID, String semester) {
+    	String sql = "SELECT subj1, subj2, subj3, subj4, sbj5 FROM subject WHERE stuID = ? AND semester = ?"; 
+    	String[] subjects = new String[5];
+    	try (Connection conn = Conn.getConnection(); 
+    		PreparedStatement stmt = conn.prepareStatement(sql)) { 
+    		
+    		stmt.setString(1, stuID); 
+    		stmt.setString(2, semester);
+    		
+    		try (ResultSet rs = stmt.executeQuery()) { 
+    			if (rs.next()) { 
+    				subjects[0] = rs.getString("subj1"); 
+    				subjects[1] = rs.getString("subj2"); 
+    				subjects[2] = rs.getString("subj3"); 
+    				subjects[3] = rs.getString("subj4"); 
+    				subjects[4] = rs.getString("sbj5"); 
+    				} 
+    			} 
+    		} catch (SQLException e) { 
+    			e.printStackTrace(); 
+    		} return subjects;
+    }
+    
+    private boolean isPay(String stuID, String semester, String course) {
+    	String querry = "SELECT COUNT(*) FROM feecollege WHERE stuID = ? AND semester = ? AND course = ?";
+    	try (Connection conn = Conn.getConnection(); 
+        	PreparedStatement stmt = conn.prepareStatement(querry)) { 
+        		
+        	stmt.setString(1, stuID); 
+        	stmt.setString(2, semester);
+        	stmt.setString(3, course);
+        		
+        	try (ResultSet rs = stmt.executeQuery()) { 
+        		if (rs.next()) { 
+        			int count = rs.getInt(1); 
+        			return count > 0;
+        		}
+        	} 
+        } catch (SQLException e) { 
+      		e.printStackTrace(); 
+        }
+    	return false;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -217,24 +275,24 @@ public class StudenFeeForm extends JFrame implements ActionListener {
             String semester = (String) semesterBox.getSelectedItem();
 
             // Xác định cột học kỳ dựa trên học kỳ đã chọn
-            String semesterColumn = "";
-            switch (semester) {
-                case "Học kì 1": semesterColumn = "semester1"; break;
-                case "Học kì 2": semesterColumn = "semester2"; break;
-                case "Học kì 3": semesterColumn = "semester3"; break;
-                case "Học kì 4": semesterColumn = "semester4"; break;
-                case "Học kì 5": semesterColumn = "semester5"; break;
-                case "Học kì 6": semesterColumn = "semester6"; break;
-                case "Học kì 7": semesterColumn = "semester7"; break;
-                case "Học kì 8": semesterColumn = "semester8"; break;
-            }
+//            String semesterColumn = "";
+//            switch (semester) {
+//                case "Học kì 1": semesterColumn = "semester1"; break;
+//                case "Học kì 2": semesterColumn = "semester2"; break;
+//                case "Học kì 3": semesterColumn = "semester3"; break;
+//                case "Học kì 4": semesterColumn = "semester4"; break;
+//                case "Học kì 5": semesterColumn = "semester5"; break;
+//                case "Học kì 6": semesterColumn = "semester6"; break;
+//                case "Học kì 7": semesterColumn = "semester7"; break;
+//                case "Học kì 8": semesterColumn = "semester8"; break;
+//            }
             try {
                 Conn c = new Conn();
-                String query = "SELECT " + semesterColumn + " FROM fee WHERE course='" + course + "'";
+                String query = "SELECT " + semester + " FROM fee WHERE course='" + course + "'";
                 ResultSet rs = c.statement.executeQuery(query);
 
                 if (rs.next()) {
-                    totalAmount.setText(rs.getString(semesterColumn));
+                    totalAmount.setText(rs.getString(semester));
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -246,16 +304,20 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         	String Department = (String)departmentBox.getSelectedItem();
         	String total = totalAmount.getText();
         	try {
-        		Conn c = new Conn();
-
-        		// Tạo câu lệnh chèn dữ liệu
-        		String Q = "INSERT INTO feecollege VALUES('" + stuID + "','" + course + "','" + Department + "','" + semester + "','" + total + "')";
-
-        		// Thực thi câu lệnh
-        		c.statement.executeUpdate(Q);
-
-        		// Hiển thị thông báo thành công
-        		JOptionPane.showMessageDialog(null, "Fee Submitted successfully");
+        		if(isPay(stuID,semester,course)) {
+        			JOptionPane.showMessageDialog(null, "Bạn đã thanh toán môn học này rồi!");
+        		}
+        		else {
+        			if(total == null || total.isEmpty()) {
+        				JOptionPane.showMessageDialog(null, "Bạn cần cập nhật giá trước để thanh toán!");
+        			}
+        			else {
+        				Conn c = new Conn();
+        				String Q = "INSERT INTO feecollege VALUES('" + stuID + "','" + course + "','" + Department + "','" + semester + "','" + total + "')";
+        				c.statement.executeUpdate(Q);
+        				JOptionPane.showMessageDialog(null, "Thanh toán thành công");        			        				
+        			}
+        		}
         	}catch (Exception ex) {
         		ex.printStackTrace();
         	}

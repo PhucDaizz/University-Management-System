@@ -98,7 +98,7 @@ public class Marks extends JFrame implements ActionListener {
         getContentPane().add(sub5);
 
         // ComboBox để chọn học kỳ
-        choiceSemester = new JComboBox<>(new String[]{"Học kỳ 1", "Học kỳ 2", "Học kỳ 3", "Học kỳ 4", "Học kỳ 5"}); // Các học kỳ có thể chọn
+        choiceSemester = new JComboBox<>(new String[]{"semester1", "semester2", "semester3", "semester4", "semester5", "semester6", "semester7", "semester8"}); // Các học kỳ có thể chọn
         choiceSemester.setBounds(60, 98, 171, 22);
         getContentPane().add(choiceSemester);
 
@@ -216,41 +216,6 @@ public class Marks extends JFrame implements ActionListener {
         }
     }
 
-//    private void showMarksBySemester(String semester) {
-//        try {
-//            Conn c = new Conn();
-//
-//            // Xóa các giá trị cũ
-//            sub1.setText("");
-//            sub2.setText("");
-//            sub3.setText("");
-//            sub4.setText("");
-//            sub5.setText("");
-//            lblsemester.setText("");
-//
-//            // Truy vấn điểm theo học kỳ đã chọn
-//            ResultSet rs1 = c.statement.executeQuery("select * from subject where stuID = '" + stuID + "' and semester = '" + semester + "'");
-//            while (rs1.next()) {
-//                sub1.setText(rs1.getString("subj1"));
-//                sub2.setText(rs1.getString("subj2"));
-//                sub3.setText(rs1.getString("subj3"));
-//                sub4.setText(rs1.getString("subj4"));
-//                sub5.setText(rs1.getString("sbj5"));
-//            }
-//
-//            ResultSet rs2 = c.statement.executeQuery("select * from marks where stuID = '" + stuID + "' and semester = '" + semester + "'");
-//            while (rs2.next()) {
-//                sub1.setText(sub1.getText() + "------------" + rs2.getString("mrk1"));
-//                sub2.setText(sub2.getText() + "------------" + rs2.getString("mrk2"));
-//                sub3.setText(sub3.getText() + "------------" + rs2.getString("mrk3"));
-//                sub4.setText(sub4.getText() + "------------" + rs2.getString("mrk4"));
-//                sub5.setText(sub5.getText() + "------------" + rs2.getString("mrk5"));
-//                lblsemester.setText("Semester " + rs2.getString("semester"));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public static void main(String[] args) {
         new Marks(""); // Thay giá trị này bằng ID sinh viên cụ thể

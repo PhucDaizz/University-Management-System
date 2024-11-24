@@ -88,18 +88,53 @@ public class TeacherDetails extends JFrame implements ActionListener {
 		setVisible(true);
 		
 	}
+	
+	 private void loadTableData() {
+	        try {
+	            Conn c = new Conn();
+	            ResultSet resultSet = c.statement.executeQuery("select * from teacher");
+	            table.setModel(DbUtils.resultSetToTableModel(resultSet));
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            JOptionPane.showMessageDialog(null, "Error loading table data: " + e.getMessage());
+	        }
+	}
+	
+	private void searchTeacher(String empId) {
+        try {
+            Conn c = new Conn();
+            String query = "select * from teacher where empId = '" + empId + "'";
+            ResultSet resultSet = c.statement.executeQuery(query);
+            
+            if (resultSet.next()) {
+                table.setModel(DbUtils.resultSetToTableModel(resultSet));
+            } else {
+                JOptionPane.showMessageDialog(null, "Không tìm thấy giảng viên với mã: " + empId);
+                loadTableData(); // Reset to show all data
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi tìm kiếm: " + e.getMessage());
+        }
+    }
+	
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == search) {
-			 String q = "select*from teacher where empID = '" + choice.getSelectedItem()+"'";
-			 try {
-				 Conn c = new Conn();
-				 ResultSet resultSet = c.statement.executeQuery(q);
-				 table.setModel(DbUtils.resultSetToTableModel(resultSet));
-				 
-			 }catch (Exception E) {
-				 E.printStackTrace();
-				 
-			 }
+			String selectedId = choice.getSelectedItem();
+            if (selectedId != null && !selectedId.trim().isEmpty()) {
+            	String q = "select * from teacher where empId = '"+choice.getSelectedItem()+"'";
+	   			try {
+	   				Conn c = new Conn();
+	   				ResultSet resultSet = c.statement.executeQuery(q);
+	   				table.setModel(DbUtils.resultSetToTableModel(resultSet));
+	   				 
+	   			}catch (Exception E) {
+	   				E.printStackTrace();
+	   			}
+            } else {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn mã giảng viên");
+            }
 		 }else if (e.getSource() == print) {
 			 try {
 				 table.print();
@@ -110,7 +145,15 @@ public class TeacherDetails extends JFrame implements ActionListener {
 			 setVisible(false);
 			 new AddFaculty();
 		 }else if(e.getSource() == update) {
-			 
+			 int row = table.getSelectedRow();
+		        if(row == -1) {
+		            JOptionPane.showMessageDialog(null, "Vui lòng chọn giảng viên cần cập nhật");
+		            return;
+		        }
+		        
+		        String empId = table.getModel().getValueAt(row, 2).toString();
+		        setVisible(false);
+		        new UpdateTeacher(empId); // Mở form cập nhật với ID đã chọn
 		 }else {
 			 setVisible(false);
 		 }

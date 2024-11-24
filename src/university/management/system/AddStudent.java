@@ -20,7 +20,7 @@ public class AddStudent extends JFrame implements ActionListener {
 	JTextField textName, textFather, textAddress, textPhone, textEmail, textM10, textM12, textUserId;
     JLabel empText;
     JDateChooser cdob;
-    JComboBox courseBox,departmentBox;
+    JComboBox courseBox,departmentBox, genderChoosen;
     JButton cancel, submit;
 
     Random ran = new Random();
@@ -190,6 +190,17 @@ public class AddStudent extends JFrame implements ActionListener {
         setSize(900, 700);
         setLocation(350,50);
         getContentPane().setLayout(null);
+        
+        genderChoosen = new JComboBox();
+        genderChoosen.setFont(new Font("Dialog", Font.PLAIN, 18));
+        genderChoosen.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
+        genderChoosen.setBounds(242, 448, 150, 30);
+        getContentPane().add(genderChoosen);
+        
+        JLabel gender = new JLabel("Giới tính");
+        gender.setFont(new Font("Dialog", Font.BOLD, 18));
+        gender.setBounds(92, 456, 100, 14);
+        getContentPane().add(gender);
         setVisible(true);
 		
 	}
@@ -208,8 +219,9 @@ public class AddStudent extends JFrame implements ActionListener {
             String course = (String) courseBox.getSelectedItem();
             String branch = (String) departmentBox.getSelectedItem();
             String userId = textUserId.getText();
+            String gender = (String) genderChoosen.getSelectedItem() == "Nam" ? "male": "female";
             try{
-                String q = "insert into student values ('"+name+"', '"+fname+"','"+stuid+"','"+dob+"', '"+address+"','"+phone+"','"+email+"', '"+x+"','"+xii+"', '"+userId+"', '"+course+"', '"+branch+"')";
+                String q = "insert into student values ('"+name+"', '"+fname+"','"+stuid+"','"+dob+"', '"+address+"','"+phone+"','"+email+"', '"+x+"','"+xii+"', '"+userId+"', '"+course+"', '"+branch+"','"+gender+"')";
                 Conn c = new Conn();
                 c.statement.executeUpdate(q);
                 JOptionPane.showMessageDialog(null,"Hoàn tất");

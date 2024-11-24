@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -93,7 +94,7 @@ public class StudentDetails extends JFrame implements ActionListener {
 	}
 	public void actionPerformed(ActionEvent e) {
 		 if(e.getSource() == search) {
-			 String q = "select*from student where rollno = '" + choice.getSelectedItem()+"'";
+			 String q = "select * from student where stuID = '"+choice.getSelectedItem()+"'";
 			 try {
 				 Conn c = new Conn();
 				 ResultSet resultSet = c.statement.executeQuery(q);
@@ -113,7 +114,16 @@ public class StudentDetails extends JFrame implements ActionListener {
 			 setVisible(false);
 			 new AddStudent();
 		 }else if(e.getSource() == update) {
-			 
+			 int row = table.getSelectedRow();
+		        if(row == -1) {
+		            JOptionPane.showMessageDialog(null, "Vui lòng chọn sinh viên cần cập nhật");
+		            return;
+		        }
+		        
+		        // Lấy student ID từ dòng được chọn
+		        String stuId = table.getModel().getValueAt(row, 2).toString();
+		        setVisible(false);
+		        new updateStudent(stuId); // Mở form cập nhật với ID đã chọn
 		 }else {
 			 setVisible(false);
 		 }
