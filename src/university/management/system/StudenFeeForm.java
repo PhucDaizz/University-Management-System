@@ -306,16 +306,18 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         	try {
         		if(isPay(stuID,semester,course)) {
         			JOptionPane.showMessageDialog(null, "Bạn đã thanh toán môn học này rồi!");
+        			totalAmount.setText("");
         		}
         		else {
-        			if(total == null || total.isEmpty()) {
-        				JOptionPane.showMessageDialog(null, "Bạn cần cập nhật giá trước để thanh toán!");
+        			if(total == null || total.isEmpty() || course == null || course.isEmpty()) {
+        				JOptionPane.showMessageDialog(null, "Tên khoá học hoặc giá đang trống không thể thanh toán!");
         			}
         			else {
         				Conn c = new Conn();
         				String Q = "INSERT INTO feecollege VALUES('" + stuID + "','" + course + "','" + Department + "','" + semester + "','" + total + "')";
         				c.statement.executeUpdate(Q);
-        				JOptionPane.showMessageDialog(null, "Thanh toán thành công");        			        				
+        				JOptionPane.showMessageDialog(null, "Thanh toán thành công");   
+        				totalAmount.setText("");
         			}
         		}
         	}catch (Exception ex) {
