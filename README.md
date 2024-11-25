@@ -43,7 +43,7 @@ Dự án Trang Quản lý Đại học ra đời với sứ mệnh xây dựng m
 
 | Tên            | Vai Trò             | GitHub                   |
 |-----------------|---------------------|-------------------------|
-| Nguyễn Phúc Đại    | Tạo trang đăng nhập, đăng ký, tạo trang chủ thống kê, tạo trang đăng ký và điều chỉnh khoá học, chỉnh sửa giao diện, sửa các hàm truy vấn và ràng buột        | [PhucDaizz](https://github.com/PhucDaizz)  |
+| Nguyễn Phúc Đại    | Tạo trang đăng nhập, đăng ký, tạo trang chủ thống kê, tạo trang đăng ký và điều chỉnh khoá học, chỉnh sửa giao diện, sửa các hàm truy vấn và ràng buộc        | [PhucDaizz](https://github.com/PhucDaizz)  |
 | Nguyễn Cao Thành Đạt      | Tạo trang thêm sinh viên, trang xin phép nghỉ phép sinh viên/giảng viên | [ThanhDatis](https://github.com/ThanhDatis)    |
 | Trần Văn Tài        | Tạo bảng học sinh, giáo viên. Bảng học phí sinh viên , kiểm tra chi tiết            | [tranvantai204](https://github.com/tranvantai204)      |
 | Trần Minh Hoàng      | Tạo trang nhập điểm,Thêm lớp học rời khỏi lớp học, thêm dữ liệu giáo viên,Tạo lớp Cập nhật            | [TranMinhHoang267](https://github.com/TranMinhHoang267)    |
