@@ -59,6 +59,7 @@ public class About extends JFrame {
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblNewLabel.setBounds(41, 189, 215, 22);
         getContentPane().add(lblNewLabel);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 

@@ -180,7 +180,7 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         setSize(900, 500);
         setLocation(350, 10);
         getContentPane().setLayout(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
     

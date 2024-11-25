@@ -121,8 +121,19 @@ public class main_class extends JFrame implements ActionListener {
         });
         btn_DKHP.setFont(new Font("Tahoma", Font.BOLD, 14));
         btn_DKHP.setBackground(Color.WHITE);
-        btn_DKHP.setBounds(0, 535, 278, 38);
+        btn_DKHP.setBounds(0, 614, 278, 38);
         menu_panel.add(btn_DKHP);
+        
+        JButton btn_TMH = new JButton("Thêm môn học");
+        btn_TMH.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		new AddCourse();
+        	}
+        });
+        btn_TMH.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btn_TMH.setBackground(Color.WHITE);
+        btn_TMH.setBounds(0, 534, 278, 38);
+        menu_panel.add(btn_TMH);
         
         JPanel panel_TTT = new JPanel();
         panel_TTT.setBounds(274, 89, 235, 62);
@@ -737,7 +748,7 @@ public class main_class extends JFrame implements ActionListener {
     public class StudentData {
         public static int[] getGenderStatistics() {
             int[] genderCount = new int[2]; // [0]: Male, [1]: Female
-            try (Connection conn = Conn.getConnection()) { // Sử dụng kết nối từ Conn
+            try (Connection conn = Conn.getConnection()) { 
                 String sql = "SELECT gender, COUNT(*) as count FROM student GROUP BY gender";
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery();

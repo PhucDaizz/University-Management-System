@@ -17,6 +17,7 @@ public class TeacherLeave extends JFrame implements ActionListener {
     JDateChooser selDate;
     JButton submit, cancel;
     JButton btnCpNht;
+    JTextPane description;
 
     TeacherLeave() {
         getContentPane().setBackground(new Color(210, 232, 252));
@@ -32,7 +33,7 @@ public class TeacherLeave extends JFrame implements ActionListener {
         getContentPane().add(RollNoSE);
 
         choiceRollNo = new Choice();
-        choiceRollNo.setBounds(60, 130, 200, 20);
+        choiceRollNo.setBounds(60, 130, 228, 30);
         getContentPane().add(choiceRollNo);
 
         try {
@@ -51,7 +52,7 @@ public class TeacherLeave extends JFrame implements ActionListener {
         getContentPane().add(lbldate);
 
         selDate = new JDateChooser();
-        selDate.setBounds(60, 210, 200, 25);
+        selDate.setBounds(60, 210, 228, 25);
         getContentPane().add(selDate);
 
         JLabel time = new JLabel("Khoảng thời gian");
@@ -60,20 +61,20 @@ public class TeacherLeave extends JFrame implements ActionListener {
         getContentPane().add(time);
 
         choTime = new Choice();
-        choTime.setBounds(60, 290, 200, 20);
+        choTime.setBounds(60, 290, 228, 30);
         choTime.add("Cả ngày");
         choTime.add("Nửa ngày");
         getContentPane().add(choTime);
 
         submit = new JButton("Nộp");
-        submit.setBounds(60, 350, 100, 25);
+        submit.setBounds(60, 438, 100, 25);
         submit.setBackground(new Color(51, 255, 102));
         submit.setForeground(Color.white);
         submit.addActionListener(this);
         getContentPane().add(submit);
 
         cancel = new JButton("Hủy bỏ");
-        cancel.setBounds(311, 350, 100, 25);
+        cancel.setBounds(314, 438, 100, 25);
         cancel.setBackground(new Color(255, 51, 51));
         cancel.setForeground(Color.white);
         cancel.addActionListener(this);
@@ -86,9 +87,18 @@ public class TeacherLeave extends JFrame implements ActionListener {
         btnCpNht = new JButton("Câp nhật");
         btnCpNht.setForeground(Color.WHITE);
         btnCpNht.setBackground(new Color(51, 153, 255));
-        btnCpNht.setBounds(187, 351, 100, 25);
+        btnCpNht.setBounds(188, 438, 100, 25);
         btnCpNht.addActionListener(this);
         getContentPane().add(btnCpNht);
+        
+        description = new JTextPane();
+        description.setBounds(60, 357, 278, 59);
+        getContentPane().add(description);
+        
+        JLabel lbLDo = new JLabel("Lý do");
+        lbLDo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lbLDo.setBounds(60, 326, 200, 20);
+        getContentPane().add(lbLDo);
         
         setVisible(true);
     }
@@ -118,11 +128,11 @@ public class TeacherLeave extends JFrame implements ActionListener {
             String rollno = choiceRollNo.getSelectedItem();
             String date = ((JTextField) selDate.getDateEditor().getUiComponent()).getText();
             String time = choTime.getSelectedItem();
-
+            String descrip = description.getText();
             if (isOnLeave(rollno, date)) { 
 				JOptionPane.showMessageDialog(null, "Bạn đã xin nghỉ phép ngày này rồi!"); 
 			} else { 
-				String Q = "insert into teacherleave values('" + rollno + "','" + date + "', '" + time + "')"; 
+				String Q = "insert into teacherleave values('" + rollno + "','" + date + "', '" + time + "', '" + descrip + "')"; 
 				try { 
 					Conn c = new Conn(); 
 					c.statement.executeUpdate(Q); 
@@ -137,8 +147,9 @@ public class TeacherLeave extends JFrame implements ActionListener {
 			String rollno = choiceRollNo.getSelectedItem();
 			String date = ((JTextField) selDate.getDateEditor().getUiComponent()).getText();
 			String time = choTime.getSelectedItem();
+			String descrip = description.getText();
 			if(isOnLeave(rollno, date)) {
-				String sql = "UPDATE teacherleave SET time = '"+ time +"' WHERE empId = '"+ rollno +"' AND date = '"+ date +"' ";
+				String sql = "UPDATE teacherleave SET time = '"+ time +"', description = '"+ descrip +"' WHERE empId = '"+ rollno +"' AND date = '"+ date +"' ";
 				JOptionPane.showMessageDialog(null, "Cập nhật thành công"); 
 				try { 
 					Conn c = new Conn(); 

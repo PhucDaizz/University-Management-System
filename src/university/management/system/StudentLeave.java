@@ -18,12 +18,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JTextPane;
 
 public class StudentLeave extends JFrame implements ActionListener {
 	Choice choiceRollNo, choTime;
 	JDateChooser selDate;
 	JButton btnCpNht;
 	JButton submit, cancel;
+	JTextPane description;
 	StudentLeave() {
 		
 		getContentPane().setBackground(new Color(210,232,252));
@@ -71,13 +73,13 @@ public class StudentLeave extends JFrame implements ActionListener {
 		choTime = new Choice();
 		choTime.setFont(new Font("Dialog", Font.PLAIN, 14));
 		choTime.setBounds(60, 290, 200, 20);
-		choTime.add("Full Day");
-		choTime.add("Half Day");
+		choTime.add("Cả ngày");
+		choTime.add("Nửa ngày");
 		getContentPane().add(choTime);
 		
 		submit = new JButton("Chấp nhận");
 		submit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		submit.setBounds(70, 365, 118, 25);
+		submit.setBounds(60, 427, 118, 25);
 		submit.setBackground(Color.GREEN);
 		submit.setForeground(Color.WHITE);
 		submit.addActionListener(this);
@@ -85,7 +87,7 @@ public class StudentLeave extends JFrame implements ActionListener {
 		
 		cancel = new JButton("Hủy bỏ");
 		cancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cancel.setBounds(324, 365, 118, 25);
+		cancel.setBounds(338, 427, 118, 25);
 		cancel.setBackground(Color.RED);
 		cancel.setForeground(Color.white);
 		cancel.addActionListener(this);
@@ -101,9 +103,18 @@ public class StudentLeave extends JFrame implements ActionListener {
 		btnCpNht.setForeground(Color.WHITE);
 		btnCpNht.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnCpNht.setBackground(new Color(102, 153, 255));
-		btnCpNht.setBounds(198, 365, 118, 25);
+		btnCpNht.setBounds(198, 427, 118, 25);
 		btnCpNht.addActionListener(this);
 		getContentPane().add(btnCpNht);
+		
+		description = new JTextPane();
+		description.setBounds(60, 359, 303, 49);
+		getContentPane().add(description);
+		
+		JLabel lbLDo = new JLabel("Lý do");
+		lbLDo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lbLDo.setBounds(60, 328, 200, 20);
+		getContentPane().add(lbLDo);
 		setVisible(true);
 		
 		
@@ -136,11 +147,11 @@ public class StudentLeave extends JFrame implements ActionListener {
 			String rollno = choiceRollNo.getSelectedItem();
 			String date = ((JTextField) selDate.getDateEditor().getUiComponent()).getText();
 			String time = choTime.getSelectedItem();
-			
+			String descrip = description.getText();
 			if (isOnLeave(rollno, date)) { 
 				JOptionPane.showMessageDialog(null, "Bạn đã xin nghỉ phép ngày này rồi!"); 
 			} else { 
-				String Q = "insert into studentLeave values('" + rollno + "','" + date + "', '" + time + "')"; 
+				String Q = "insert into studentLeave values('" + rollno + "','" + date + "', '" + time + "', '" + descrip + "')"; 
 				try { 
 					Conn c = new Conn(); 
 					c.statement.executeUpdate(Q); 
@@ -155,8 +166,9 @@ public class StudentLeave extends JFrame implements ActionListener {
 			String rollno = choiceRollNo.getSelectedItem();
 			String date = ((JTextField) selDate.getDateEditor().getUiComponent()).getText();
 			String time = choTime.getSelectedItem();
+			String descrip = description.getText();
 			if(isOnLeave(rollno, date)) {
-				String sql = "UPDATE studentLeave SET time = '"+ time +"' WHERE stuID = '"+ rollno +"' AND date = '"+ date +"' ";
+				String sql = "UPDATE studentLeave SET time = '"+ time +"', description = '"+ descrip +"' WHERE stuID = '"+ rollno +"' AND date = '"+ date +"'";
 				JOptionPane.showMessageDialog(null, "Cập nhật thành công"); 
 				try { 
 					Conn c = new Conn(); 

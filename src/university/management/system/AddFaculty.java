@@ -208,7 +208,6 @@ public class AddFaculty extends JFrame implements ActionListener {
                 c.statement.executeUpdate(q);
                 JOptionPane.showMessageDialog(null,"Hoàn tất");
                 setVisible(false);
-                System.out.println("Submit button clicked");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

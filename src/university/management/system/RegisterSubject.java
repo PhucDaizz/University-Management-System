@@ -168,7 +168,7 @@ public class RegisterSubject extends JFrame{
 					Student.addRegister(stuId, semester, subA, subB, subC, subD, subE);			
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "BẠn đã đăng ký này rồi, bạn chỉ có thể chỉnh sửa lại môn khi chưa bắt đầu học kỳ!");
+					JOptionPane.showMessageDialog(null, "Bạn đã đăng ký này rồi, bạn chỉ có thể chỉnh sửa lại môn khi chưa bắt đầu học kỳ!");
 				}
 			}
 		});
@@ -182,11 +182,12 @@ public class RegisterSubject extends JFrame{
 				String subC = (String) sub3.getSelectedItem();
 				String subD = (String) sub4.getSelectedItem();
 				String subE = (String) sub5.getSelectedItem();
-				if(Student.checkStudentInSemester(stuId, semester)) {
-					Student.updateRegister(stuId, semester, subA, subB, subC, subD, subE);  // chỉnh lại					
+				if(Student.checkStudentInSemester(stuId, semester) && !Student.isEnterMarks(stuId, semester) && !Fee.isPay(stuId, semester)) {
+					Student.updateRegister(stuId, semester, subA, subB, subC, subD, subE); 
+					JOptionPane.showMessageDialog(null, "Thay đổi môn học thành công");
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "BẠn đã đăng ký này rồi, bạn chỉ có thể chỉnh sửa lại môn khi chưa bắt đầu học kỳ!");
+					JOptionPane.showMessageDialog(null, "Bạn đã đăng ký này rồi, bạn chỉ có thể chỉnh sửa lại môn khi chưa bắt đầu học kỳ và chưa thanh toán môn học!");
 				}
 				
 			}
@@ -270,7 +271,28 @@ public class RegisterSubject extends JFrame{
 			} 
 		}
 		
-		
+		public static boolean isEnterMarks(String stuID, String semester) {
+		    String query = "SELECT COUNT(*) AS count FROM marks WHERE stuID = ? AND semester = ?";
+		    
+		    try (
+		        Connection conn = Conn.getConnection(); 
+		        PreparedStatement stmt = conn.prepareStatement(query)) {
+		        
+		        stmt.setString(1, stuID); 
+		        stmt.setString(2, semester); 
+		        
+		        try (ResultSet rs = stmt.executeQuery()) {
+		            if (rs.next()) {
+		                int count = rs.getInt("count");
+		                return count > 0; 
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return false; 
+		}
+
 		
 		
 	}
@@ -291,7 +313,32 @@ public class RegisterSubject extends JFrame{
 			
 			return subList.toArray(new String[0]);
 		}
+		
+		public static boolean isPay(String stuID, String semester) {
+			String query = "SELECT COUNT(*) AS count FROM feecollege WHERE stuID = ? AND semester = ?";
+			try (
+			        Connection conn = Conn.getConnection(); 
+			        PreparedStatement stmt = conn.prepareStatement(query)) {
+			        
+			        stmt.setString(1, stuID); 
+			        stmt.setString(2, semester); 
+			        
+			        try (ResultSet rs = stmt.executeQuery()) {
+			            if (rs.next()) {
+			                int count = rs.getInt("count");
+			                return count > 0; 
+			            }
+			        }
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+			    return false; 
+		}
+		
+		
 	}
+	
+	
 	
 	public static void main(String[] args) {
 		new RegisterSubject();
