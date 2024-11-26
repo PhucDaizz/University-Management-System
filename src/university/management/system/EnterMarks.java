@@ -13,7 +13,7 @@ public class EnterMarks extends JFrame implements ActionListener {
 	Choice choicerollno;
 	JComboBox comboBox;
 	JTextField sub1, sub2, sub3, sub4, sub5, mrk1, mrk2, mrk3, mrk4, mrk5;
-    JButton submit, cancel;
+    JButton submit, cancel, update;
 	EnterMarks() {
 		getContentPane().setFont(new Font("Dialog", Font.BOLD, 14));
         // Thiết lập màu nền
@@ -137,7 +137,7 @@ public class EnterMarks extends JFrame implements ActionListener {
         
         submit = new JButton("Nộp");
         submit.setFont(new Font("Dialog", Font.BOLD, 14));
-        submit.setBounds(70,360,150,25);
+        submit.setBounds(50,360,150,25);
         submit.setBackground(Color.black);
         submit.setForeground(Color.WHITE);
         submit.addActionListener(this);
@@ -146,11 +146,23 @@ public class EnterMarks extends JFrame implements ActionListener {
         
         cancel = new JButton("Huỷ");
         cancel.setFont(new Font("Dialog", Font.BOLD, 14));
-        cancel.setBounds(280,360,150,25);
+        cancel.setBounds(400,360,150,25);
         cancel.setBackground(Color.black);
         cancel.setForeground(Color.WHITE);
         cancel.addActionListener(this);
         getContentPane().add(cancel);
+        
+        update = new JButton("Cập nhật");
+        update.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        update.setForeground(Color.WHITE);
+        update.setFont(new Font("Dialog", Font.BOLD, 14));
+        update.setBackground(Color.BLACK);
+        update.setBounds(221, 360, 150, 25);
+        update.addActionListener(this);
+        getContentPane().add(update);
         
         // Thiết lập kích thước và vị trí cửa sổ
         setSize(1000, 500);  // Tăng chiều cao cửa sổ
@@ -226,7 +238,6 @@ public class EnterMarks extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Xử lý hành động
     	if (e.getSource()== submit) {
-    		String Q1 = "insert into subject values('"+choicerollno.getSelectedItem()+"','"+comboBox.getSelectedItem()+"','"+sub1.getText()+"','"+sub2.getText()+"','"+sub3.getText()+"','"+sub4.getText()+"','"+sub5.getText()+"')";
 			String Q2 = "insert into marks values('"+choicerollno.getSelectedItem()+"','"+comboBox.getSelectedItem()+"','"+mrk1.getText()+"','"+mrk2.getText()+"','"+mrk3.getText()+"','"+mrk4.getText()+"','"+mrk5.getText()+"')";
 			
     		try {
@@ -235,17 +246,34 @@ public class EnterMarks extends JFrame implements ActionListener {
     			}
     			else {
     				Conn c = new Conn();
-    				c.statement.executeUpdate(Q1);
     				c.statement.executeUpdate(Q2);
     				JOptionPane.showMessageDialog(null, "Nhập điểm thành công");
     				setVisible(false);    				
+    			}
+    			
+            } catch (Exception E) {
+                E.printStackTrace();
+            }
+    	}
+    	else if(e.getSource()== update)	{
+    		String sql = "UPDATE marks SET mrk1 = '"+mrk1.getText()+"', mrk2 = '"+mrk2.getText()+"', mrk3 = '"+mrk3.getText()+"', mrk4 = '"+mrk4.getText()+"', mrk5 = '"+mrk5.getText()+"' WHERE stuID = '"+choicerollno.getSelectedItem()+"' AND semester = '"+comboBox.getSelectedItem()+"'";
+    		try {
+    			if(isEnterPoint(choicerollno.getSelectedItem(),(String)comboBox.getSelectedItem())) {
+    				Conn c = new Conn();
+    				c.statement.executeUpdate(sql);
+    				JOptionPane.showMessageDialog(null, "Cập nhật điểm thành công");
+    				setVisible(true);   
+    			}
+    			else {
+    				JOptionPane.showMessageDialog(null, "Điểm chưa được nhập không thể update");
     			}
     			
                 
             } catch (Exception E) {
                 E.printStackTrace();
             }
-        } else {
+    	}
+         else {
             setVisible(false);
         }
     }
