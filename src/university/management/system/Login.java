@@ -94,7 +94,7 @@ public class Login extends JFrame implements ActionListener {
                     new main_class();
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Invalid Username or Password");
+                    JOptionPane.showMessageDialog(null, "Username hoặc Password không được để trống");
                 }
 
             }catch(Exception ex){

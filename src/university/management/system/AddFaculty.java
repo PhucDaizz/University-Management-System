@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class AddFaculty extends JFrame implements ActionListener {
@@ -13,9 +17,9 @@ public class AddFaculty extends JFrame implements ActionListener {
     JTextField textName, textFather, textAddress, textPhone, textEmail, textM10, textM12, textUserId;
     JLabel empText;
     JDateChooser cdob;
-    JComboBox courseBox,departmentBox;
+    JComboBox departmentBox;
     JButton cancel, submit;
-
+    JComboBox<String> courseBox;
     Random ran = new Random();
 
     long f4 = Math.abs((ran.nextLong() % 9000L) + 1000L );
@@ -145,11 +149,16 @@ public class AddFaculty extends JFrame implements ActionListener {
         qualification.setFont(new Font("Dialog", Font.BOLD, 18));
         getContentPane().add(qualification);
 
-        String course[] = {"Đại số", "Thể chất", "Tin học cơ bản", "Mạng", "Cơ sở sữ liệu", "Triết"};
-        courseBox = new JComboBox(course);
-        courseBox.setFont(new Font("Dialog", Font.PLAIN, 18));
-        courseBox.setBounds(241,400,150,30);
+        courseBox = new JComboBox<>(); 
+        courseBox.setFont(new Font("Dialog", Font.PLAIN, 18)); 
+        courseBox.setBounds(241, 400, 150, 30); 
         courseBox.setBackground(Color.WHITE);
+        
+        ArrayList<String> courses = getCoursesFromDatabase(); 
+        for (String course : courses) { 
+        	courseBox.addItem(course);
+        }
+        
         getContentPane().add(courseBox);
 
         // Department
@@ -158,7 +167,7 @@ public class AddFaculty extends JFrame implements ActionListener {
         department.setFont(new Font("Dialog", Font.BOLD, 18));
         getContentPane().add(department);
 
-        String Department[] = {"Khoa học máy tính", "Cơ khí", "Oto", "Điện", "Trí tuệ nhân tạo"};
+        String Department[] = {"Khoa học máy tính", "Cơ khí", "Oto", "Điện", "Trí tuệ nhân tạo","Logistic", "Ngôn ngữ anh", "Xây dựng"};
         departmentBox = new JComboBox(Department);
         departmentBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
         departmentBox.setBounds(645,400,150,30);
@@ -185,6 +194,21 @@ public class AddFaculty extends JFrame implements ActionListener {
         setLocation(350,50);
         getContentPane().setLayout(null);
         setVisible(true);
+    }
+    
+    public static ArrayList<String> getCoursesFromDatabase() { 
+    	ArrayList<String> courses = new ArrayList<>(); 
+    	try (Connection conn = Conn.getConnection(); 
+    		Statement stmt = conn.createStatement(); 
+    		ResultSet rs = stmt.executeQuery("SELECT course FROM fee")) { 
+    		
+    			while (rs.next()) { 
+    				courses.add(rs.getString("course")); 
+    			} 
+    		} catch (Exception e) { 
+    			e.printStackTrace(); 
+    		} 
+    	return courses;
     }
 
     @Override
