@@ -3,9 +3,13 @@ package university.management.system;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.*;
 import javax.swing.JButton;
@@ -20,7 +24,8 @@ public class AddStudent extends JFrame implements ActionListener {
 	JTextField textName, textFather, textAddress, textPhone, textEmail, textM10, textM12, textUserId;
     JLabel empText;
     JDateChooser cdob;
-    JComboBox courseBox,departmentBox, genderChoosen;
+    JComboBox departmentBox, genderChoosen;
+    JComboBox<String> courseBox;
     JButton cancel, submit;
 
     Random ran = new Random();
@@ -151,11 +156,17 @@ public class AddStudent extends JFrame implements ActionListener {
         qualification.setFont(new Font("Dialog", Font.BOLD, 18));
         getContentPane().add(qualification);
 
-        String course[] = {"Đại số", "Thể chất", "Tin học cơ bản", "Mạng", "Cơ sở sữ liệu", "Triết"};
-        courseBox = new JComboBox(course);
+        
+        courseBox = new JComboBox<>(); 
         courseBox.setFont(new Font("Dialog", Font.PLAIN, 18));
         courseBox.setBounds(242,400,150,30);
         courseBox.setBackground(Color.WHITE);
+        
+        ArrayList<String> courses = getCoursesFromDatabase(); 
+        for (String course : courses) { 
+        	courseBox.addItem(course);
+        }
+        
         getContentPane().add(courseBox);
 
         // Department
@@ -164,7 +175,7 @@ public class AddStudent extends JFrame implements ActionListener {
         department.setFont(new Font("Dialog", Font.BOLD, 18));
         getContentPane().add(department);
 
-        String Department[] = {"Khoa học máy tính", "Cơ khí", "Oto", "Điện", "Trí tuệ nhân tạo"};
+        String Department[] = {"Khoa học máy tính", "Cơ khí", "Oto", "Điện", "Trí tuệ nhân tạo","Logistic", "Ngôn ngữ anh", "Xây dựng"};
         departmentBox = new JComboBox(Department);
         departmentBox.setFont(new Font("Dialog", Font.PLAIN, 18));
         departmentBox.setBounds(639,400,150,30);
@@ -204,6 +215,22 @@ public class AddStudent extends JFrame implements ActionListener {
         setVisible(true);
 		
 	}
+	
+	public static ArrayList<String> getCoursesFromDatabase() { 
+    	ArrayList<String> courses = new ArrayList<>(); 
+    	try (Connection conn = Conn.getConnection(); 
+    		Statement stmt = conn.createStatement(); 
+    		ResultSet rs = stmt.executeQuery("SELECT course FROM fee")) { 
+    		
+    			while (rs.next()) { 
+    				courses.add(rs.getString("course")); 
+    			} 
+    		} catch (Exception e) { 
+    			e.printStackTrace(); 
+    		} 
+    	return courses;
+    }
+	
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == submit) {

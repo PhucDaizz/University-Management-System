@@ -365,7 +365,7 @@ public class main_class extends JFrame implements ActionListener {
         
         JLabel lb_TeacherCount = new JLabel("");
         lb_TeacherCount.setFont(new Font("Tahoma", Font.BOLD, 48));
-        lb_TeacherCount.setBounds(77, 59, 42, 43);
+        lb_TeacherCount.setBounds(77, 59, 97, 43);
         display_teacher.add(lb_TeacherCount);
         int teacherCount = TeacherData.countTeachers();
         lb_TeacherCount.setText(String.valueOf(teacherCount));
@@ -384,7 +384,7 @@ public class main_class extends JFrame implements ActionListener {
         
         JLabel lb_StudentCount = new JLabel("2");
         lb_StudentCount.setFont(new Font("Tahoma", Font.BOLD, 48));
-        lb_StudentCount.setBounds(86, 62, 49, 49);
+        lb_StudentCount.setBounds(61, 62, 127, 49);
         display_student.add(lb_StudentCount);
         int studentCount = StudentData.getGenderStatistics()[0] + StudentData.getGenderStatistics()[1];
         lb_StudentCount.setText(String.valueOf(studentCount));
