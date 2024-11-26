@@ -10,12 +10,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StudenFeeForm extends JFrame implements ActionListener {
     Choice rollNumber;
     JLabel textName, textFName, totalAmount; // Định nghĩa các JLabel ở cấp lớp
     JComboBox courseBox, departmentBox, semesterBox; 
     JButton pay, update, back;
+    JButton payAll;
+    String[] subjects;
 
     // Constructor
     public StudenFeeForm() {
@@ -77,7 +81,7 @@ public class StudenFeeForm extends JFrame implements ActionListener {
 //        qualification.setFont(new Font("Tahoma",Font.BOLD,20));
         getContentPane().add(qualification);
 
-        String course[] = {"Lịch Sử Đảng", "Đại số", "Thể chất", "Tin học cơ bản", "Mạng", "Cơ sở sữ liệu", "Triết","Lập Trình Mạng"};
+        String course[] = {""};
         courseBox = new JComboBox(course);
         courseBox.setBounds(200,180,200,30);
         courseBox.setBackground(Color.WHITE);
@@ -180,12 +184,20 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         setSize(900, 500);
         setLocation(350, 10);
         getContentPane().setLayout(null);
+        
+        payAll = new JButton("Thanh toán cả kỳ");
+        payAll.setBounds(130, 416, 139, 23);
+        payAll.addActionListener(this);
+        getContentPane().add(payAll);
+        
+        
+        
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
     
     private void updateCourseBox(String stuId, String semester) { 
-    	String[] subjects = getSubjects(stuId, semester); 
+    	subjects = getSubjects(stuId, semester); 
     	courseBox.removeAllItems(); 
     	for (String subject : subjects) { 
     		courseBox.addItem(subject); 
@@ -323,8 +335,83 @@ public class StudenFeeForm extends JFrame implements ActionListener {
         	}catch (Exception ex) {
         		ex.printStackTrace();
         	}
-        	
-        }else {
+        }else if (e.getSource() == payAll) {
+            String[] courseInSemester = subjects.clone(); // Tạo bản sao của subjects
+            ArrayList<String> courseNotPayList = new ArrayList<>();
+            String stuID = (String) rollNumber.getSelectedItem();
+            String semesterVal = (String) semesterBox.getSelectedItem();
+            String Department = (String)departmentBox.getSelectedItem();
+            double totalAmount = 0.0;
+
+            String checkCourNotPay = "SELECT course FROM feecollege WHERE stuID = ? AND semester = ?";
+            try (Connection conn = Conn.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(checkCourNotPay)) {
+                
+                stmt.setString(1, stuID);
+                stmt.setString(2, semesterVal);
+                
+                try (ResultSet rs = stmt.executeQuery()) {
+                    ArrayList<String> coursesPaid = new ArrayList<>();
+                    while (rs.next()) {
+                        coursesPaid.add(rs.getString("course"));
+                    }
+
+                    for (String course : courseInSemester) {
+                        if (!coursesPaid.contains(course)) {
+                            courseNotPayList.add(course);
+                        }
+                    }
+                }
+
+                for (String course : courseNotPayList) {
+                    String query = "SELECT " + semesterVal + " FROM fee WHERE course='" + course + "'";
+                    try (PreparedStatement feeStmt = conn.prepareStatement(query);
+                         ResultSet feeRs = feeStmt.executeQuery()) {
+                        if (feeRs.next()) {
+                            double courseFee = feeRs.getDouble(semesterVal);
+                            totalAmount += courseFee;
+                        }
+                    }
+                }
+
+                if (courseNotPayList.size() > 0) {
+                    int confirmed = JOptionPane.showConfirmDialog(null, "Tổng số tiền cần thanh toán là: " + totalAmount + ". Bạn có muốn thanh toán không?", "Xác nhận thanh toán", JOptionPane.YES_NO_OPTION);
+                    if (confirmed == JOptionPane.YES_OPTION) {
+                        String insertQuery = "INSERT INTO feecollege (stuID, course, Department, semester, total) VALUES (?, ?, ?, ?, ?)";
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+                            for (String course : courseNotPayList) {
+                                String query = "SELECT " + semesterVal + " FROM fee WHERE course='" + course + "'";
+                                try (PreparedStatement feeStmt = conn.prepareStatement(query);
+                                     ResultSet feeRs = feeStmt.executeQuery()) {
+                                    if (feeRs.next()) {
+                                        double courseFee = feeRs.getDouble(semesterVal);
+                                        insertStmt.setString(1, stuID);
+                                        insertStmt.setString(2, course);
+                                        insertStmt.setString(3, Department); 
+                                        insertStmt.setString(4, semesterVal);
+                                        insertStmt.setDouble(5, courseFee);
+                                        insertStmt.executeUpdate();
+                                    }
+                                }
+                            }
+                            JOptionPane.showMessageDialog(null, "Thanh toán thành công!");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Không có khóa học nào cần thanh toán.");
+                }
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+
+
+        
+        
+        
+        else {
         	setVisible(false);
         }
     }
