@@ -3,7 +3,9 @@ package university.management.system;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +15,11 @@ import javax.swing.border.CompoundBorder;
 
 
 public class RegisterSubject extends JFrame{
-
+	String[] subs;
+	JComboBox StudentID;
+	JComboBox Semester;
+	JComboBox sub1,sub2,sub3,sub4,sub5;
+	
 	RegisterSubject(){
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
@@ -23,11 +29,22 @@ public class RegisterSubject extends JFrame{
 		lbRegisterSub.setBounds(413, 11, 238, 39);
 		getContentPane().add(lbRegisterSub);
 		
-		JComboBox Semester = new JComboBox();
+		Semester = new JComboBox();
 		Semester.setBackground(Color.WHITE);
 		Semester.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		Semester.setModel(new DefaultComboBoxModel(new String[] {"semester1", "semester2", "semester3", "semester4", "semester5", "semester6", "semester7", "semester8"}));
 		Semester.setBounds(669, 78, 273, 31);
+		Semester.addActionListener(new ActionListener() { 
+        	public void actionPerformed(ActionEvent e) {
+        		subs = Fee.getAllSub((String)StudentID.getSelectedItem(), (String)Semester.getSelectedItem());
+        		
+        		sub1.setModel(new DefaultComboBoxModel(subs));
+                sub2.setModel(new DefaultComboBoxModel(subs));
+                sub3.setModel(new DefaultComboBoxModel(subs));
+                sub4.setModel(new DefaultComboBoxModel(subs));
+                sub5.setModel(new DefaultComboBoxModel(subs));
+        		} 
+        	});
 		getContentPane().add(Semester);
 		
 		JLabel lbChoosenSemester = new JLabel("Chọn học kỳ bạn muốn đăng ký ");
@@ -36,7 +53,7 @@ public class RegisterSubject extends JFrame{
 		getContentPane().add(lbChoosenSemester);
 		
 		String[] idList = Student.getAllId();
-		JComboBox StudentID = new JComboBox();
+		StudentID = new JComboBox();
 		StudentID.setBackground(Color.WHITE);
 		StudentID.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		StudentID.setModel(new DefaultComboBoxModel(idList));
@@ -50,7 +67,7 @@ public class RegisterSubject extends JFrame{
 		
 		
 		// lấy toàn bộ môn học 
-		String[] subs = Fee.getAllSub();
+		subs = Fee.getAllSub((String)StudentID.getSelectedItem(), (String)Semester.getSelectedItem());
 		
 		JButton btnNewButton = new JButton("Xác nhận đăng ký");
 		btnNewButton.setBackground(new Color(0, 255, 0));
@@ -87,65 +104,65 @@ public class RegisterSubject extends JFrame{
 		getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-				JComboBox sub1 = new JComboBox();
-				sub1.setBounds(407, 22, 273, 31);
-				panel_1.add(sub1);
-				sub1.setBackground(new Color(255, 255, 255));
-				sub1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				sub1.setModel(new DefaultComboBoxModel(subs));
+		sub1 = new JComboBox();
+		sub1.setBounds(407, 22, 273, 31);
+		panel_1.add(sub1);
+		sub1.setBackground(new Color(255, 255, 255));
+		sub1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		sub1.setModel(new DefaultComboBoxModel(subs));
 				
-				JComboBox sub2 = new JComboBox();
-				sub2.setBackground(Color.WHITE);
-				sub2.setBounds(407, 79, 273, 31);
-				panel_1.add(sub2);
-				sub2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				sub2.setModel(new DefaultComboBoxModel(subs));
+		sub2 = new JComboBox();
+		sub2.setBackground(Color.WHITE);
+		sub2.setBounds(407, 79, 273, 31);
+		panel_1.add(sub2);
+		sub2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		sub2.setModel(new DefaultComboBoxModel(subs));
 				
-				JComboBox sub3 = new JComboBox();
-				sub3.setBackground(Color.WHITE);
-				sub3.setBounds(407, 145, 273, 31);
-				panel_1.add(sub3);
-				sub3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				sub3.setModel(new DefaultComboBoxModel(subs));
+		sub3 = new JComboBox();
+		sub3.setBackground(Color.WHITE);
+		sub3.setBounds(407, 145, 273, 31);
+		panel_1.add(sub3);
+		sub3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		sub3.setModel(new DefaultComboBoxModel(subs));
 				
-				JComboBox sub4 = new JComboBox();
-				sub4.setBackground(Color.WHITE);
-				sub4.setBounds(407, 209, 273, 31);
-				panel_1.add(sub4);
-				sub4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				sub4.setModel(new DefaultComboBoxModel(subs));
+		sub4 = new JComboBox();
+		sub4.setBackground(Color.WHITE);
+		sub4.setBounds(407, 209, 273, 31);
+		panel_1.add(sub4);
+		sub4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		sub4.setModel(new DefaultComboBoxModel(subs));
 				
-				JComboBox sub5 = new JComboBox();
-				sub5.setBackground(Color.WHITE);
-				sub5.setBounds(407, 271, 273, 31);
-				panel_1.add(sub5);
-				sub5.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				sub5.setModel(new DefaultComboBoxModel(subs));
+		sub5 = new JComboBox();
+		sub5.setBackground(Color.WHITE);
+		sub5.setBounds(407, 271, 273, 31);
+		panel_1.add(sub5);
+		sub5.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		sub5.setModel(new DefaultComboBoxModel(subs));
 				
-				JLabel lbSub5 = new JLabel("Môn học 5:");
-				lbSub5.setBounds(129, 274, 129, 25);
-				panel_1.add(lbSub5);
-				lbSub5.setFont(new Font("Tahoma", Font.BOLD, 20));
+		JLabel lbSub5 = new JLabel("Môn học 5:");
+		lbSub5.setBounds(129, 274, 129, 25);
+		panel_1.add(lbSub5);
+		lbSub5.setFont(new Font("Tahoma", Font.BOLD, 20));
 				
-				JLabel lbSub4 = new JLabel("Môn học 4:");
-				lbSub4.setBounds(129, 215, 129, 25);
-				panel_1.add(lbSub4);
-				lbSub4.setFont(new Font("Tahoma", Font.BOLD, 20));
+		JLabel lbSub4 = new JLabel("Môn học 4:");
+		lbSub4.setBounds(129, 215, 129, 25);
+		panel_1.add(lbSub4);
+		lbSub4.setFont(new Font("Tahoma", Font.BOLD, 20));
 				
-				JLabel lbSub3 = new JLabel("Môn học 3:");
-				lbSub3.setBounds(129, 148, 129, 25);
-				panel_1.add(lbSub3);
-				lbSub3.setFont(new Font("Tahoma", Font.BOLD, 20));
+		JLabel lbSub3 = new JLabel("Môn học 3:");
+		lbSub3.setBounds(129, 148, 129, 25);
+		panel_1.add(lbSub3);
+		lbSub3.setFont(new Font("Tahoma", Font.BOLD, 20));
 				
-				JLabel lbSub2 = new JLabel("Môn học 2:");
-				lbSub2.setBounds(129, 85, 129, 25);
-				panel_1.add(lbSub2);
-				lbSub2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		JLabel lbSub2 = new JLabel("Môn học 2:");
+		lbSub2.setBounds(129, 85, 129, 25);
+		panel_1.add(lbSub2);
+		lbSub2.setFont(new Font("Tahoma", Font.BOLD, 20));
 				
-				JLabel lbSub1 = new JLabel("Môn học 1:");
-				lbSub1.setBounds(129, 28, 129, 25);
-				panel_1.add(lbSub1);
-				lbSub1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		JLabel lbSub1 = new JLabel("Môn học 1:");
+		lbSub1.setBounds(129, 28, 129, 25);
+		panel_1.add(lbSub1);
+		lbSub1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		
 		
 		setSize(1128, 688);  
@@ -295,23 +312,55 @@ public class RegisterSubject extends JFrame{
 
 		
 		
+		
+		
 	}
 	
-	public class Fee{
-		public static String[] getAllSub() {
-			ArrayList<String> subList = new ArrayList<>();
-			 try (Connection conn = Conn.getConnection()) { // Sử dụng kết nối từ Conn
-		            String sql = "SELECT course FROM `fee`";
-		            PreparedStatement stmt = conn.prepareStatement(sql);
-		            ResultSet rs = stmt.executeQuery();
-		            while (rs.next()) {
-		            	subList.add(rs.getString("course"));
+	public class Fee{		
+		public static String[] getAllSub(String stuID, String currentSemester) {
+		    ArrayList<String> unregisteredSubjects = new ArrayList<>();
+		    try (Connection conn = Conn.getConnection()) {
+		        // Lấy tất cả các môn học từ bảng fee
+		        String allSubjectsQuery = "SELECT course FROM `fee`";
+		        
+		        // Lấy các môn học đã đăng ký của sinh viên từ các kỳ trước
+		        String registeredSubjectsQuery = "SELECT subj1, subj2, subj3, subj4, sbj5 " +
+		                                         "FROM subject " +
+		                                         "WHERE stuID = ? AND semester <= ?";
+		        
+		        // Thực hiện truy vấn lấy tất cả môn học
+		        PreparedStatement allSubjectsStmt = conn.prepareStatement(allSubjectsQuery);
+		        ResultSet allSubjectsRs = allSubjectsStmt.executeQuery();
+		        
+		        // Lấy các môn học đã đăng ký từ các kỳ trước
+		        PreparedStatement registeredSubjectsStmt = conn.prepareStatement(registeredSubjectsQuery);
+		        registeredSubjectsStmt.setString(1, stuID);
+		        registeredSubjectsStmt.setString(2, currentSemester);
+		        ResultSet registeredSubjectsRs = registeredSubjectsStmt.executeQuery();
+		        
+		        // Tập hợp các môn học đã đăng ký
+		        Set<String> registeredSubjects = new HashSet<>();
+		        while (registeredSubjectsRs.next()) {
+		            for (int i = 1; i <= 5; i++) {
+		                String subject = registeredSubjectsRs.getString(i);
+		                if (subject != null && !subject.isEmpty()) {
+		                    registeredSubjects.add(subject);
+		                }
 		            }
-		        } catch (SQLException e) {
-		            e.printStackTrace();
 		        }
-			
-			return subList.toArray(new String[0]);
+		        
+		        // Lọc các môn học chưa đăng ký
+		        while (allSubjectsRs.next()) {
+		            String course = allSubjectsRs.getString("course");
+		            if (!registeredSubjects.contains(course)) {
+		                unregisteredSubjects.add(course);
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    return unregisteredSubjects.toArray(new String[0]);
 		}
 		
 		public static boolean isPay(String stuID, String semester) {

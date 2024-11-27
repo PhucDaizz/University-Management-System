@@ -171,27 +171,43 @@ public class EnterMarks extends JFrame implements ActionListener {
     }
 	
 	private String[] getSubjects(String stuID, String semester) {
-		String sql = "SELECT subj1, subj2, subj3, subj4, sbj5 FROM subject WHERE stuID = ? AND semester = ?";
-		String[] subjects = new String[5];
-    	try (Connection conn = Conn.getConnection(); 
-    		PreparedStatement stmt = conn.prepareStatement(sql)) { 
-    		
-    		stmt.setString(1, stuID); 
-    		stmt.setString(2, semester);
-    		
-    		try (ResultSet rs = stmt.executeQuery()) { 
-    			if (rs.next()) { 
-    				sub1.setText(rs.getString("subj1")); 
-    				sub2.setText(rs.getString("subj2")); 
-    				sub3.setText(rs.getString("subj3")); 
-    				sub4.setText(rs.getString("subj4")); 
-    				sub5.setText(rs.getString("sbj5"));
-    				} 
-    			} 
-    		} catch (SQLException e) { 
-    			e.printStackTrace(); 
-    		} return subjects;
-    }
+	    String sql = "SELECT subj1, subj2, subj3, subj4, sbj5 FROM subject WHERE stuID = ? AND semester = ?";
+	    String[] subjects = new String[5];
+	    try (Connection conn = Conn.getConnection(); 
+	         PreparedStatement stmt = conn.prepareStatement(sql)) { 
+	            
+	        stmt.setString(1, stuID); 
+	        stmt.setString(2, semester);
+	            
+	        try (ResultSet rs = stmt.executeQuery()) { 
+	            if (rs.next()) { 
+	                subjects[0] = rs.getString("subj1"); 
+	                subjects[1] = rs.getString("subj2"); 
+	                subjects[2] = rs.getString("subj3"); 
+	                subjects[3] = rs.getString("subj4"); 
+	                subjects[4] = rs.getString("sbj5");
+	                // Hiển thị các giá trị lên các ô nhập liệu
+	                sub1.setText(subjects[0]);
+	                sub2.setText(subjects[1]);
+	                sub3.setText(subjects[2]);
+	                sub4.setText(subjects[3]);
+	                sub5.setText(subjects[4]);
+	            } else {
+	                // Nếu không có kết quả nào được tìm thấy, đặt các ô nhập liệu về trống
+	            	JOptionPane.showMessageDialog(null, "Học kỳ này sinh viên chưa đăng ký môn học vui lòng không nhập");
+	                sub1.setText("");
+	                sub2.setText("");
+	                sub3.setText("");
+	                sub4.setText("");
+	                sub5.setText("");
+	            }
+	        }
+	    } catch (SQLException e) { 
+	        e.printStackTrace(); 
+	    }
+	    return subjects;
+	}
+
 	
 	private void getMarks(String stuID, String semester) {
 		String sql = "SELECT mrk1, mrk2, mrk3, mrk4, mrk5 FROM marks WHERE stuID = ? AND semester = ?";
@@ -203,12 +219,19 @@ public class EnterMarks extends JFrame implements ActionListener {
 	    		
 	    	try (ResultSet rs = stmt.executeQuery()) { 
 	    		if (rs.next()) { 
-	    			mrk1.setText(rs.getString("mrk1")); 
-	    			mrk2.setText(rs.getString("mrk2")); 
-	    			mrk3.setText(rs.getString("mrk3")); 
-	    			mrk4.setText(rs.getString("mrk4")); 
-	    			mrk5.setText(rs.getString("mrk5"));
-	    		} 
+	                mrk1.setText(rs.getString("mrk1")); 
+	                mrk2.setText(rs.getString("mrk2")); 
+	                mrk3.setText(rs.getString("mrk3")); 
+	                mrk4.setText(rs.getString("mrk4")); 
+	                mrk5.setText(rs.getString("mrk5"));
+	            } else {
+	                // Nếu không có kết quả nào được tìm thấy, đặt các ô nhập điểm về trống
+	                mrk1.setText("");
+	                mrk2.setText("");
+	                mrk3.setText("");
+	                mrk4.setText("");
+	                mrk5.setText("");
+	            }
 	    	} 
 	    } catch (SQLException e) { 
 	    	e.printStackTrace(); 

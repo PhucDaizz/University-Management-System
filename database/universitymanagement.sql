@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 26, 2024 lúc 05:18 AM
+-- Thời gian đã tạo: Th10 27, 2024 lúc 01:47 PM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.3.23
 
@@ -97,7 +97,17 @@ INSERT INTO `feecollege` (`stuID`, `course`, `Department`, `semester`, `total`) 
 ('14092570', 'Thể chất', 'Khoa học máy tính', 'semester1', '49000'),
 ('14092570', 'Triết', 'Khoa học máy tính', 'semester1', '49000'),
 ('14092570', 'Lập Trình Mạng', 'Khoa học máy tính', 'semester1', '49000'),
-('14092570', 'Lịch Sử Đảng', 'Khoa học máy tính', 'semester1', '49000');
+('14092570', 'Lịch Sử Đảng', 'Khoa học máy tính', 'semester1', '49000'),
+('14092570', 'Tâm lý học', 'Khoa học máy tính', 'semester2', '34000.0'),
+('14092570', 'Cơ học lượng tử', 'Khoa học máy tính', 'semester2', '64000.0'),
+('14092570', 'Điều khiển tự động', 'Khoa học máy tính', 'semester2', '60000.0'),
+('14092570', 'Phân tích thiết kế', 'Khoa học máy tính', 'semester2', '45000.0'),
+('14092570', 'Quản trị hệ thống', 'Khoa học máy tính', 'semester2', '58000.0'),
+('1409194', 'Lịch Sử Đảng', 'Khoa học máy tính', 'semester1', '49000'),
+('1409194', 'Đại số', 'Khoa học máy tính', 'semester1', '44000'),
+('1409194', 'Thể chất', 'Khoa học máy tính', 'semester1', '39000'),
+('1409194', 'Tin học cơ bản', 'Khoa học máy tính', 'semester1', '70000'),
+('1409194', 'Mạng', 'Khoa học máy tính', 'semester1', '44000');
 
 -- --------------------------------------------------------
 
@@ -139,7 +149,7 @@ CREATE TABLE `marks` (
 --
 
 INSERT INTO `marks` (`stuID`, `semester`, `mrk1`, `mrk2`, `mrk3`, `mrk4`, `mrk5`) VALUES
-('14092570', 'semester1', '9', '7', '9', '6', '5');
+('14092570', 'semester1', '10', '7', '9', '6', '5');
 
 -- --------------------------------------------------------
 
@@ -240,7 +250,8 @@ CREATE TABLE `subject` (
 
 INSERT INTO `subject` (`stuID`, `semester`, `subj1`, `subj2`, `subj3`, `subj4`, `sbj5`) VALUES
 ('14092570', 'semester1', 'Lịch Sử Đảng', 'Đại số', 'Thể chất', 'Triết', 'Lập Trình Mạng'),
-('14092570', 'semester1', 'Lịch Sử Đảng', 'Đại số', 'Thể chất', 'Triết', 'Lập Trình Mạng');
+('14092570', 'semester2', 'Tâm lý học', 'Cơ học lượng tử', 'Điều khiển tự động', 'Phân tích thiết kế', 'Quản trị hệ thống'),
+('1409194', 'semester1', 'Lịch Sử Đảng', 'Đại số', 'Thể chất', 'Tin học cơ bản', 'Mạng');
 
 -- --------------------------------------------------------
 

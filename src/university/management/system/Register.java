@@ -77,36 +77,48 @@ public class Register extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getSource() == registerButton) { 
-			String username = usernameField.getText(); 
-			String password = new String(passwordField.getPassword()); 
-			String confirmPassword = new String(confirmPasswordField.getPassword());
-			
-			if (password.equals(confirmPassword)) { 
-				if(checkUserExists(username)) {
-					JOptionPane.showMessageDialog(this, "Tài khoản này đã tồn tại!");
-				}
-				else {
-					String queryInsert = "insert into login values ('"+username+"', '"+password+"')";
-					try {
-						Conn c = new Conn();
-		                c.statement.executeUpdate(queryInsert);
-		                JOptionPane.showMessageDialog(this, "Đăng ký thành công!"); // Tiến hành lưu thông tin người dùng hoặc thực hiện các hành động khác 
-		                this.setVisible(false); 
-					} catch(Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-			}
-			else { 
-				JOptionPane.showMessageDialog(this, "Mật khẩu không khớp vui lòng nhập lại!"); 
-			}
-		}
-		else {
-			this.setVisible(false); 
-		}
+	    if (e.getSource() == registerButton) {
+	        String username = usernameField.getText();
+	        String password = new String(passwordField.getPassword());
+	        String confirmPassword = new String(confirmPasswordField.getPassword());
+
+	        if (username == null || username.trim().isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập!");
+	            return;
+	        }
+
+	        if (password == null || password.trim().isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu!");
+	            return;
+	        }
+
+	        if (confirmPassword == null || confirmPassword.trim().isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Vui lòng xác nhận mật khẩu!");
+	            return;
+	        }
+
+	        if (password.equals(confirmPassword)) {
+	            if (checkUserExists(username)) {
+	                JOptionPane.showMessageDialog(this, "Tài khoản này đã tồn tại!");
+	            } else {
+	                String queryInsert = "INSERT INTO login (username, password) VALUES ('" + username + "', '" + password + "')";
+	                try {
+	                    Conn c = new Conn();
+	                    c.statement.executeUpdate(queryInsert);
+	                    JOptionPane.showMessageDialog(this, "Đăng ký thành công!");
+	                    this.setVisible(false);
+	                } catch (Exception ex) {
+	                    ex.printStackTrace();
+	                }
+	            }
+	        } else {
+	            JOptionPane.showMessageDialog(this, "Mật khẩu và mật khẩu xác nhận không khớp, vui lòng nhập lại!");
+	        }
+	    } else {
+	        this.setVisible(false);
+	    }
 	}
+
 	
 	private boolean checkUserExists(String username) { 
 		String queryCheck = "SELECT username FROM login WHERE username = ?"; 
