@@ -7,6 +7,10 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JTextField;
 import javax.swing.JPanel;
@@ -157,6 +161,37 @@ public class AddCourse extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
+	private boolean isExisting(String subject) {
+	    String query = "SELECT COUNT(*) FROM fee WHERE LOWER(course) = LOWER(?)";
+	    try (Connection conn = Conn.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        stmt.setString(1, subject);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next() && rs.getInt(1) > 0) {
+	                return true; // Môn học đã tồn tại
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false; // Môn học không tồn tại
+	}
+	
+	private boolean isNumeric(String str) { 
+		if (str == null || str.trim().isEmpty()) { 
+			return false; 
+		} 
+		try { 
+			Long.parseLong(str); 
+			return true; 
+		} catch (NumberFormatException e) { 
+			return false; 
+		}
+	}
+
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAdd) {
@@ -170,14 +205,25 @@ public class AddCourse extends JFrame implements ActionListener{
 	        String semester8Value = semester8.getText();
 	        String subjectValue = subject.getText();
 	        
-	        String query = "Insert into fee Values('"+subjectValue+"', '"+semester1Value+"', '"+semester2Value+"', '"+semester3Value+"', '"+semester4Value+"', '"+semester5Value+"', '"+semester6Value+"', '"+semester7Value+"','"+semester8Value+"')";
-	        try {
-	        	Conn c = new Conn();
-                c.statement.executeUpdate(query);
-                JOptionPane.showMessageDialog(null,"Thêm thành công");
-	        } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+	        if (!isNumeric(semester1Value) || !isNumeric(semester2Value) || !isNumeric(semester3Value) || 
+	        	!isNumeric(semester4Value) || !isNumeric(semester5Value) || !isNumeric(semester6Value) || 
+	        	!isNumeric(semester7Value) || !isNumeric(semester8Value)) { 
+	        		JOptionPane.showMessageDialog(null, "Ở các học kỳ bạn đang nhập nhập định dạng không đúng định dạng số hoặc bị bỏ trống!"); 
+	        		return;
+	        }
+	        
+	        if (isExisting(subjectValue)) { 
+	        	JOptionPane.showMessageDialog(null, "Môn học này đã tồn tại!"); 
+	        } else { 
+	        	String query = "INSERT INTO fee VALUES ('" + subjectValue + "', '" + semester1Value + "', '" + semester2Value + "', '" + semester3Value + "', '" + semester4Value + "', '" + semester5Value + "', '" + semester6Value + "', '" + semester7Value + "','" + semester8Value + "')"; 
+	        	try { 
+	        		Conn c = new Conn(); 
+	        		c.statement.executeUpdate(query); 
+	        		JOptionPane.showMessageDialog(null, "Thêm thành công"); 
+	        	} catch (Exception ex) { 
+	        		ex.printStackTrace(); 
+	        	}
+	        }
 		}
 		else if(e.getSource() == btnCancel) {
 			setVisible(false);

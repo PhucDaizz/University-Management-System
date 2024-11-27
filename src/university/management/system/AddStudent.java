@@ -222,12 +222,12 @@ public class AddStudent extends JFrame implements ActionListener {
     		Statement stmt = conn.createStatement(); 
     		ResultSet rs = stmt.executeQuery("SELECT course FROM fee")) { 
     		
-    			while (rs.next()) { 
-    				courses.add(rs.getString("course")); 
-    			} 
-    		} catch (Exception e) { 
-    			e.printStackTrace(); 
+    		while (rs.next()) { 
+    			courses.add(rs.getString("course")); 
     		} 
+    	} catch (Exception e) { 
+    		e.printStackTrace(); 
+    	} 
     	return courses;
     }
 	

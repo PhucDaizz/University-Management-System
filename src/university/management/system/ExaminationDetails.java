@@ -6,11 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -79,14 +83,36 @@ public class ExaminationDetails extends JFrame implements ActionListener {
         getContentPane().setLayout(null);
         setVisible(true);
     }
+    
+    private boolean isExisting(String stuId) {
+    	String query = "SELECT COUNT(*) FROM student where stuID = ?";
+    	try (Connection conn = Conn.getConnection();
+   	         PreparedStatement stmt = conn.prepareStatement(query)) {
+   	        
+   	        stmt.setString(1, stuId);
+   	        try (ResultSet rs = stmt.executeQuery()) {
+   	            if (rs.next() && rs.getInt(1) > 0) {
+   	                return true;
+   	            }
+   	        }
+   	    } catch (SQLException e) {
+   	        e.printStackTrace();
+   	    }
+    	return false;
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         // Xử lý sự kiện cho nút Result và Back ở đây
         if (e.getSource() == result) {
-        	setVisible(false);
-        	new Marks(search.getText());
-            // Thực hiện hành động khi nhấn nút Result
-        } else
+        	if(isExisting(search.getText())) {
+        		setVisible(false);
+        		new Marks(search.getText());        		
+        	}
+        	else {
+        		JOptionPane.showMessageDialog(null, "Mã sinh viên không tồn tại. Vui lòng kiểm tra lại!");
+        	}
+        } else 
             // Thực hiện hành động khi nhấn nút Back
         	setVisible(false);
         }

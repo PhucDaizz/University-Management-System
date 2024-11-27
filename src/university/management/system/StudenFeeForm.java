@@ -93,7 +93,7 @@ public class StudenFeeForm extends JFrame implements ActionListener {
 //        department.setFont(new Font("serif",Font.BOLD,16));
         getContentPane().add(department);
 
-        String Department[] = {"Khoa học máy tính", "Cơ khí", "Oto", "Điện", "Trí tuệ nhân tạo"};
+        String Department[] = {"Khoa học máy tính", "Cơ khí", "Oto", "Điện", "Trí tuệ nhân tạo", "Logistic", "Ngôn ngữ anh", "Xây dựng"};
         departmentBox = new JComboBox(Department);
         departmentBox.setBounds(200,220,150,20);
         departmentBox.setBackground(Color.WHITE);

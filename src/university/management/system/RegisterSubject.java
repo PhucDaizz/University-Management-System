@@ -181,6 +181,11 @@ public class RegisterSubject extends JFrame{
 				String subD = (String) sub4.getSelectedItem();
 				String subE = (String) sub5.getSelectedItem();
 				
+				if(!Student.areSubjectsUnique(subA, subB, subC, subD, subE)) {
+					JOptionPane.showMessageDialog(null, "Các môn học đăng ký không được trùng nhau!");
+					return;
+				}
+				
 				if(!Student.checkStudentInSemester(stuId, semester)) {
 					Student.addRegister(stuId, semester, subA, subB, subC, subD, subE);			
 				}
@@ -199,6 +204,11 @@ public class RegisterSubject extends JFrame{
 				String subC = (String) sub3.getSelectedItem();
 				String subD = (String) sub4.getSelectedItem();
 				String subE = (String) sub5.getSelectedItem();
+				if(!Student.areSubjectsUnique(subA, subB, subC, subD, subE)) {
+					JOptionPane.showMessageDialog(null, "Các môn học đăng ký không được trùng nhau!");
+					return;
+				}
+				
 				if(Student.checkStudentInSemester(stuId, semester) && !Student.isEnterMarks(stuId, semester) && !Fee.isPay(stuId, semester)) {
 					Student.updateRegister(stuId, semester, subA, subB, subC, subD, subE); 
 					JOptionPane.showMessageDialog(null, "Thay đổi môn học thành công");
@@ -311,7 +321,22 @@ public class RegisterSubject extends JFrame{
 		}
 
 		
-		
+		public static boolean areSubjectsUnique (String subA, String subB, String subC, String subD, String subE) { 
+			Set<String> subjects = new HashSet<>(); // Thêm các môn học vào HashSet nếu không phải là null và không rỗng 
+			if (subA != null && !subA.isEmpty()) subjects.add(subA); 
+			if (subB != null && !subB.isEmpty()) subjects.add(subB); 
+			if (subC != null && !subC.isEmpty()) subjects.add(subC);
+			if (subD != null && !subD.isEmpty()) subjects.add(subD); 
+			if (subE != null && !subE.isEmpty()) subjects.add(subE); 
+			int nonNullCount = 0; 
+			if (subA != null && !subA.isEmpty()) nonNullCount++; 
+			if (subB != null && !subB.isEmpty()) nonNullCount++; 
+			if (subC != null && !subC.isEmpty()) nonNullCount++;
+			if (subD != null && !subD.isEmpty()) nonNullCount++; 
+			if (subE != null && !subE.isEmpty()) nonNullCount++; 
+			// Nếu số lượng môn học duy nhất khác với số lượng môn học không null, trả về false 
+			return subjects.size() == nonNullCount;
+		}
 		
 		
 	}

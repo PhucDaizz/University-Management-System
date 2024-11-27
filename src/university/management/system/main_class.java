@@ -416,18 +416,10 @@ public class main_class extends JFrame implements ActionListener {
         lb_TeacherLeaveCount.setFont(new Font("Tahoma", Font.BOLD, 48));
         lb_TeacherLeaveCount.setBounds(86, 62, 49, 49);
         display_teacherLeave.add(lb_TeacherLeaveCount);
-        new Thread(() -> {
-            int teacherLeaveToday = TeacherData.countTeacherLeave();
-            SwingUtilities.invokeLater(() -> {
-                lb_TeacherLeaveCount.setText(String.valueOf(teacherLeaveToday));
-                lb_TeacherLeaveCount.revalidate();
-                lb_TeacherLeaveCount.repaint();
-            });
-        }).start();
-//        int teacherLeaveToday = TeacherData.countTeacherLeave();
-//        lb_TeacherLeaveCount.setText(String.valueOf(teacherLeaveToday));
-//        lb_TeacherLeaveCount.revalidate();
-//        lb_TeacherLeaveCount.repaint();
+        int teacherLeaveToday = TeacherData.countTeacherLeave();
+        lb_TeacherLeaveCount.setText(String.valueOf(teacherLeaveToday));
+        lb_TeacherLeaveCount.revalidate();
+        lb_TeacherLeaveCount.repaint();
         
         JPanel display_studentLeave = new JPanel();
         display_studentLeave.setLayout(null);
@@ -444,18 +436,10 @@ public class main_class extends JFrame implements ActionListener {
         lb_StudentLeaveCount.setFont(new Font("Tahoma", Font.BOLD, 48));
         lb_StudentLeaveCount.setBounds(86, 62, 49, 49);
         display_studentLeave.add(lb_StudentLeaveCount);
-        new Thread(() -> {
-        	int studentLeaveToday = StudentData.countStudentLeave();
-            SwingUtilities.invokeLater(() -> {
-            	lb_StudentLeaveCount.setText(String.valueOf(studentLeaveToday));
-	            lb_StudentLeaveCount.revalidate();
-	            lb_StudentLeaveCount.repaint();
-            });
-        }).start();
-//        int studentLeaveToday = StudentData.countStudentLeave();
-//        lb_StudentLeaveCount.setText(String.valueOf(studentLeaveToday));
-//        lb_StudentLeaveCount.revalidate();
-//        lb_StudentLeaveCount.repaint();
+        int studentLeaveToday = StudentData.countStudentLeave();
+        lb_StudentLeaveCount.setText(String.valueOf(studentLeaveToday));
+        lb_StudentLeaveCount.revalidate();
+        lb_StudentLeaveCount.repaint();
         
         JPanel panel_Revenue = new JPanel();
     	panel_Revenue.setBackground(SystemColor.activeCaption);
