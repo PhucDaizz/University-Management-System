@@ -36,7 +36,7 @@ public class main_class extends JFrame implements ActionListener {
         header_panel.setLayout(null);
         
         JLabel Hello = new JLabel("Xin chào!");
-        Hello.setForeground(Color.WHITE);
+        Hello.setForeground(new Color(255, 153, 51));
         Hello.setFont(new Font("Tahoma", Font.BOLD, 22));
         Hello.setBounds(1304, 29, 108, 24);
         header_panel.add(Hello);
@@ -462,6 +462,27 @@ public class main_class extends JFrame implements ActionListener {
     	lb_TextRevenue.setBounds(117, 25, 174, 25);
     	panel_Revenue.add(lb_TextRevenue);
     	
+    	JButton btnReset = new JButton("Tải lại trang");
+    	btnReset.setBackground(Color.WHITE);
+    	btnReset.setFont(new Font("Tahoma", Font.ITALIC, 14));
+    	btnReset.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			int teacherCount = TeacherData.countTeachers();
+    	        lb_TeacherCount.setText(String.valueOf(teacherCount));
+    	        int teacherLeaveToday = TeacherData.countTeacherLeave();
+    	        lb_TeacherLeaveCount.setText(String.valueOf(teacherLeaveToday));
+    	        int studentLeaveToday = StudentData.countStudentLeave();
+    	        lb_StudentLeaveCount.setText(String.valueOf(studentLeaveToday));
+    	        int studentCount = StudentData.getGenderStatistics()[0] + StudentData.getGenderStatistics()[1];
+    	        lb_StudentCount.setText(String.valueOf(studentCount));
+    	        int totalRevenue = Feecollege.totalRevenue();
+    	    	lb_totalRevenue.setText(String.valueOf(totalRevenue));
+    		}
+    	});
+    	btnReset.setIcon(new ImageIcon(main_class.class.getResource("/icon/icons/refresh_reload_icon.png")));
+    	btnReset.setBounds(1335, 742, 151, 38);
+    	getContentPane().add(btnReset);
+    	
     	
         
         btn_TSV.setVisible(false);
@@ -861,5 +882,10 @@ public class main_class extends JFrame implements ActionListener {
         new main_class();
     }
 	private static void addPopup(Component component, final JPopupMenu popup) {
+	}
+	private static class __Tmp {
+		private static void __tmp() {
+			  javax.swing.JPanel __wbp_panel = new javax.swing.JPanel();
+		}
 	}
 }
