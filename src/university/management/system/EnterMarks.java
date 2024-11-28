@@ -238,6 +238,15 @@ public class EnterMarks extends JFrame implements ActionListener {
 	    }
 	}
 	
+	private boolean isValidMarks(String marks) {
+        try {
+            double mark = Double.parseDouble(marks);
+            return mark >= 0 && mark <= 10;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+	
 	public boolean isEnterPoint(String stuID, String semester) {
 		String querry = "SELECT COUNT(*) FROM marks where stuID = ? AND semester = ?";
 		try (Connection conn = Conn.getConnection(); 
@@ -261,6 +270,15 @@ public class EnterMarks extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Xử lý hành động
     	if (e.getSource()== submit) {
+    		
+    		// Kiểm tra tính hợp lệ của điểm
+            if (!isValidMarks(mrk1.getText()) || !isValidMarks(mrk2.getText()) || 
+                !isValidMarks(mrk3.getText()) || !isValidMarks(mrk4.getText()) || 
+                !isValidMarks(mrk5.getText())) {
+                JOptionPane.showMessageDialog(null, "Điểm phải là số từ 0 đến 10", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+    		
 			String Q2 = "insert into marks values('"+choicerollno.getSelectedItem()+"','"+comboBox.getSelectedItem()+"','"+mrk1.getText()+"','"+mrk2.getText()+"','"+mrk3.getText()+"','"+mrk4.getText()+"','"+mrk5.getText()+"')";
 			
     		try {
@@ -279,6 +297,14 @@ public class EnterMarks extends JFrame implements ActionListener {
             }
     	}
     	else if(e.getSource()== update)	{
+    		
+    		if (!isValidMarks(mrk1.getText()) || !isValidMarks(mrk2.getText()) || 
+                    !isValidMarks(mrk3.getText()) || !isValidMarks(mrk4.getText()) || 
+                    !isValidMarks(mrk5.getText())) {
+                    JOptionPane.showMessageDialog(null, "Điểm phải là số từ 0 đến 10", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+            }
+    		
     		String sql = "UPDATE marks SET mrk1 = '"+mrk1.getText()+"', mrk2 = '"+mrk2.getText()+"', mrk3 = '"+mrk3.getText()+"', mrk4 = '"+mrk4.getText()+"', mrk5 = '"+mrk5.getText()+"' WHERE stuID = '"+choicerollno.getSelectedItem()+"' AND semester = '"+comboBox.getSelectedItem()+"'";
     		try {
     			if(isEnterPoint(choicerollno.getSelectedItem(),(String)comboBox.getSelectedItem())) {
